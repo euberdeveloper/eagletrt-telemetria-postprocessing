@@ -1,6 +1,10 @@
+import json
+
+LOG = False
 result = { }
 def addToResult(props, value):
-    print(props, value)
+    if LOG:
+        print(props, value)
     tempRes = result
     for p in props[:-1]:
         if p not in tempRes:
@@ -148,9 +152,9 @@ def parse(id, msg):
         a2y *= (a2scale/65536)*100
         a2z *= (a2scale/65536)*100
         addToResult(['imu', 'accel'], {
-            'x': g2x,
-            'y': g2y,
-            'z': g2z
+            'x': a2x,
+            'y': a2y,
+            'z': a2z
         })
 
     # front_wheels_encoders
@@ -177,6 +181,7 @@ def parse(id, msg):
 
     # steering_wheel
     if(id == 0xA0):
+
         # gears
         if(msg[0] == 0x01):
             addToResult(['steering_wheel', 'gears'], {
@@ -194,7 +199,7 @@ def parse(id, msg):
             'clock_period': msg[6] & 0x0F
         })        
 
-def canMessageParse(msg):
+def canParseNumber(msg):
     return [
         (msg >> 56) & 0xFF,
         (msg >> 48) & 0xFF,
@@ -206,11 +211,18 @@ def canMessageParse(msg):
         (msg >> 0) & 0xFF,
     ]
 
-messages = [
-    [0x0AA, 0x0142D63D9F6B9C90],
-    [0x0C0, 0x00018F018F019204]
-]
+def parseLine(line: str):
+    if len(line) < 1:
+        return
+    [id, value] = line.split(' ')[2].split('#')
+    parse(
+        int(id, 16),
+        canParseNumber(int(value.ljust(16, '0'), 16))
+    )
 
-for m in messages:
-    parse(m[0], canMessageParse(m[1]))
-print(result)
+file = open('default.can.log', 'r').read()
+for line in file.split('\n'):
+    parseLine(line)
+
+with open('result.json', 'w') as fp:
+    json.dump(result, fp)
