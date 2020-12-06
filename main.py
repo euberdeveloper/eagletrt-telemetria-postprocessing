@@ -198,7 +198,7 @@ def parse(id, msg):
             'rotations': (msg[3] << 8) + msg[4],
             'angle': msg[5] & 0x0F,
             'clock_period': msg[6] & 0x0F
-        })        
+        })
 
 def canParseNumber(msg):
     return [
