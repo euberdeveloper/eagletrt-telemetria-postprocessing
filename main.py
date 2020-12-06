@@ -1,4 +1,5 @@
 import json
+import sys
 
 LOG = False
 result = { }
@@ -220,9 +221,17 @@ def parseLine(line: str):
         canParseNumber(int(value.ljust(16, '0'), 16))
     )
 
-file = open('default.can.log', 'r').read()
+if len(sys.argv) != 2 and len(sys.argv) != 3:
+    print('Usage: main.py <input can.log file> <output json file>')
+    quit()
+
+
+CANLOG_FILE = sys.argv[1]
+JSON_FILE = 'result.json' if len(sys.argv) == 2 else sys.argv[2]
+
+file = open(CANLOG_FILE, 'r').read()
 for line in file.split('\n'):
     parseLine(line)
 
-with open('result.json', 'w') as fp:
+with open(JSON_FILE, 'w') as fp:
     json.dump(result, fp)
