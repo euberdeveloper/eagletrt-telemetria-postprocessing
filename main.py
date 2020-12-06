@@ -190,8 +190,8 @@ def parse(id, msg):
         addToResult(['distance'], {
             'meters': (msg[1] << 8) + msg[2],
             'rotations': (msg[3] << 8) + msg[4],
-            'angle': msg[5] % 16, #TODO: & 0x000000F 
-            'clock_period': msg[6] % 16 #TODO: & 0x000000F 
+            'angle': msg[5] & 0x0F,
+            'clock_period': msg[6] & 0x0F
         })        
 
 def canMessageParse(msg):
