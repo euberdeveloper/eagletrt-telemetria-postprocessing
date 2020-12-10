@@ -5,7 +5,7 @@ function parseCoordinates(raw: number) {
     return (left + right) * 100
 }
 
-export default function (
+function parseGpsValues (
     msg: string[],
     callback: (props: string, value: any) => void
 ) {
@@ -51,4 +51,11 @@ export default function (
             'ground_speed_human': parseFloat(msg[7]),
         })
     }
+}
+
+export default function (
+    line: string,
+    callback: (props: string, value: any) => void
+) {
+    parseGpsValues(line.split(','), callback);
 }
