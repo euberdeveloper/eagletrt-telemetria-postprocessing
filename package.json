@@ -1,0 +1,28 @@
+{
+  "name": "eagletrt-telemetria-validator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "npm run transpile && npm run start",
+    "start": "node dist/index.js",
+    "transpile": "tsc",
+    "postinstall": "npm run transpile",
+    "commit": "git-cz",
+    "commit:sign": "git-cz -S"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eagletrt/eagletrt-telemetria-validator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eagletrt/eagletrt-telemetria-validator/issues"
+  },
+  "homepage": "https://github.com/eagletrt/eagletrt-telemetria-validator#readme",
+  "devDependencies": {
+    "@types/node": "^14.14.11",
+    "commitizen": "^4.2.2"
+  }
+}
