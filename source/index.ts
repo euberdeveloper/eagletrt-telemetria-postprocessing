@@ -1,20 +1,21 @@
 import { EType } from './types';
 import { exportTest, exportJSON, exportCSV } from './exporter'
 
-function exportCAN(inputFilename: string, outputFilename: string, type: EType) {
+
+export default function exportData(type: EType, canInputFilename: string | undefined, gpsInputFilename: string | undefined, outputFilenameOrPath: string) {
     switch (type) {
         case EType.Test:
-            exportTest(inputFilename, undefined, outputFilename);
+            exportTest(canInputFilename, gpsInputFilename, outputFilenameOrPath);
             break;
         case EType.JSON:
-            exportJSON(inputFilename, undefined, outputFilename);
+            exportJSON(canInputFilename, gpsInputFilename, outputFilenameOrPath);
             break;
         case EType.CSV:
-            exportCSV(inputFilename, undefined, outputFilename);
+            exportCSV(canInputFilename, gpsInputFilename, outputFilenameOrPath);
             break;
     }
 }
 
-exportCAN('./assets/default.can.log', './out/test.json', EType.Test);
-exportCAN('./assets/default.can.log', './out/result.json', EType.JSON);
-exportCAN('./assets/default.can.log', './out', EType.CSV);
+// exportData(EType.Test, './assets/default.can.log', './assets/mixed.gps.log', './out/test.json');
+// exportData(EType.JSON, './assets/default.can.log', './assets/mixed.gps.log', './out/result.json');
+// exportData(EType.CSV, './assets/default.can.log', './assets/mixed.gps.log', './out');
