@@ -39,8 +39,7 @@ def parse(id, msg):
             #TODO: check value
             addToResult(['inverters', 'right' if id == 0x181 else 'left', 'torque'], (msg[2] * 256 + msg[1]))
 
-        # BMS HV
-    
+    # BMS HV
     # bms_hv
     if (id == 0xAA):
         # voltage
