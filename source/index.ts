@@ -17,7 +17,3 @@ export default function exportData(type: EType, canInputFilename: string | undef
             break;
     }
 }
-
-// exportData(EType.Test, './assets/default.can.log', './assets/mixed.gps.log', './out/test.json');
-// exportData(EType.JSON, './assets/default.can.log', './assets/mixed.gps.log', './out/result.json');
-// exportData(EType.CSV, './assets/default.can.log', './assets/mixed.gps.log', './out');
