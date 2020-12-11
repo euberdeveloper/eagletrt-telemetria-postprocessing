@@ -15,6 +15,6 @@ function exportCAN(inputFilename: string, outputFilename: string, type: EType) {
     }
 }
 
-//exportCAN('./assets/default.can.log', './out/test.json', EType.Test);
-//exportCAN('./assets/default.can.log', './out/result.json', EType.JSON);
+exportCAN('./assets/default.can.log', './out/test.json', EType.Test);
+exportCAN('./assets/default.can.log', './out/result.json', EType.JSON);
 exportCAN('./assets/default.can.log', './out', EType.CSV);

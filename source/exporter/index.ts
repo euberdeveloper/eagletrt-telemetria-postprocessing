@@ -8,24 +8,16 @@ import { type } from 'os';
 
 export function exportTest(canInputFilename: string | undefined, gpsInputFilename: string | undefined, outputFilename: string) {
     const result: { [id: string]: any[] } = {}
-    const callback = (props: string[], value: any) => {
-        if (result[props.join('.')]) {
-            result[props.join('.')].push(value);
-        } else {
-            result[props.join('.')] = [value];
-        }
-    };
-
     if (canInputFilename) {
         const lines = fs.readFileSync(canInputFilename).toString().split('\n');
         for (const line of lines) {
-            parseCan(line, callback)
+            parseCan(line, (p, v) => parseCallback(result, p, v, false))
         }
     }
     if (gpsInputFilename) {
         const lines = fs.readFileSync(gpsInputFilename).toString().split('\n');
         for (const line of lines) {
-            parseGps(line, callback)
+            parseGps(line, (p, v) => parseCallback(result, p, v, false))
         }
     }
 
@@ -41,47 +33,49 @@ export function exportTest(canInputFilename: string | undefined, gpsInputFilenam
 
 export function exportJSON(canInputFilename: string | undefined, gpsInputFilename: string | undefined, outputFilename: string) {
     const result: object = {}
-    const callback = (props: string[], value: any, timestamp: Date) => {
-        let tempRes: any = result;
-        let key = props.pop()!;
-        for (const p of props) {
-            if (tempRes[p] === undefined) {
-                tempRes[p] = {} as any;
-            }
-            tempRes = tempRes[p];
-        }
-
-        if (tempRes[key]) {
-            tempRes[key].push({
-                timestamp: timestamp,
-                value: value
-            });
-        } else {
-            tempRes[key] = [{
-                timestamp: timestamp,
-                value: value
-            }];
-        }
-    };
-
     if (canInputFilename) {
         const lines = fs.readFileSync(canInputFilename).toString().split('\n');
         for (const line of lines) {
-            parseCan(line, (p, v) => callback(p, v, new Date()));
+            parseCan(line, (p, v) => parseCallback(result, p, v, false, new Date()));
         }
     }
     if (gpsInputFilename) {
         const lines = fs.readFileSync(gpsInputFilename).toString().split('\n');
         for (const line of lines) {
-            parseGps(line, (p, v) => callback(p, v, new Date()));
+            parseGps(line, (p, v) => parseCallback(result, p, v, false, new Date()));
         }
     }
     fs.writeFileSync(outputFilename, JSON.stringify(result));
 }
 
 export function exportCSV(canInputFilename: string | undefined, gpsInputFilename: string | undefined, outputPath: string) {
-    const result: { [id: string]: any[] } = {}
-    const callback = (props: string[], value: any, timestamp: Date) => {
+    const result: object = {}
+    if (canInputFilename) {
+        const lines = fs.readFileSync(canInputFilename).toString().split('\n');
+        for (const line of lines) {
+            parseCan(line, (p, v) => parseCallback(result, p, v, false, new Date()));
+        }
+    }
+    if (gpsInputFilename) {
+        const lines = fs.readFileSync(gpsInputFilename).toString().split('\n');
+        for (const line of lines) {
+            parseGps(line, (p, v) => parseCallback(result, p, v, false, new Date()));
+        }
+    }
+
+    recursiveCreateCSV(outputPath, result);
+}
+
+function parseCallback(result: any, props: string[], value: any, flat: boolean, timestamp: Date | undefined = undefined) {
+    // Test
+    if (flat) {
+        if (result[props.join('.')]) {
+            result[props.join('.')].push(parseValue(value, timestamp));
+        } else {
+            result[props.join('.')] = [parseValue(value, timestamp)];
+        }
+    } else {
+        //JSON
         let tempRes: any = result;
         let key = props.pop()!;
         for (const p of props) {
@@ -92,32 +86,22 @@ export function exportCSV(canInputFilename: string | undefined, gpsInputFilename
         }
 
         if (tempRes[key]) {
-            tempRes[key].push({
-                timestamp: timestamp,
-                value: value
-            });
+            tempRes[key].push(parseValue(value, timestamp));
         } else {
-            tempRes[key] = [{
-                timestamp: timestamp,
-                value: value
-            }];
-        }
-    };
-
-    if (canInputFilename) {
-        const lines = fs.readFileSync(canInputFilename).toString().split('\n');
-        for (const line of lines) {
-            parseCan(line, (p, v) => callback(p, v, new Date()));
+            tempRes[key] = [parseValue(value, timestamp)];
         }
     }
-    if (gpsInputFilename) {
-        const lines = fs.readFileSync(gpsInputFilename).toString().split('\n');
-        for (const line of lines) {
-            parseGps(line, (p, v) => callback(p, v, new Date()));
-        }
-    }
+}
 
-    recursiveCreateCSV(outputPath, result);
+function parseValue(value: any, timestamp: Date | undefined = undefined) {
+    if (timestamp) {
+        return {
+            timestamp: timestamp,
+            value: value
+        }
+    } else {
+        return value;
+    }
 }
 
 function recursiveCreateCSV(partialPath: string, partialResult: any) {
@@ -129,8 +113,8 @@ function recursiveCreateCSV(partialPath: string, partialResult: any) {
                     if (!header) {
                         header = `timestamp\t${Object.keys(l.value).join('\t')}`;
                     }
-                    return `timestamp\t${Object.keys(l.value).map(k => l.value[k]).join('\t')}`
-                    
+                    return `${l.timestamp}\t${Object.keys(l.value).map(k => l.value[k]).join('\t')}`
+
                 } else {
                     if (!header) {
                         header = 'timestamp\tvalue';
