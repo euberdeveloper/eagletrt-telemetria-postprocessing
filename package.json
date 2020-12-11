@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "bin": {
-    "eagletst-process": "dist/source/bin/index.js"
+    "eagletst-process": "dist/bin/index.js"
   },
   "scripts": {
     "serve": "npm run transpile && npm run start",
