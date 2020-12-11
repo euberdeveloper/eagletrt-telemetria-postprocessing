@@ -7,10 +7,10 @@ function parseCoordinates(raw: number) {
 
 function parseGpsValues (
     msg: string[],
-    callback: (props: string, value: any) => void
+    callback: (props: string[], value: any) => void
 ) {
     if (msg[0] === '$GNGGA') {
-        callback('GNGGA', {
+        callback(['gps', 'new', 'gga'], {
             'utc_time': msg[1],
             'latitude': parseCoordinates(parseFloat(msg[2])),
             'ns_indicator': msg[3],
@@ -22,7 +22,7 @@ function parseGpsValues (
     }
 
     if (msg[0] === '$GNGLL') {
-        callback('GNGLL', {
+        callback(['gps', 'new', 'gll'], {
             'latitude': parseCoordinates(parseFloat(msg[1])),
             'ns_indicator': msg[2],
             'longitude': parseCoordinates(parseFloat(msg[3])),
@@ -33,7 +33,7 @@ function parseGpsValues (
     }
 
     if (msg[0] === '$GNRMC') {
-        callback('GNRMC', {
+        callback(['gps', 'new', 'rmc'], {
             'utc_time': msg[1],
             'status': msg[2] === 'A',
             'latitude': parseCoordinates(parseFloat(msg[3])),
@@ -46,7 +46,7 @@ function parseGpsValues (
     }
 
     if (msg[0] === '$GNVTG') {
-        callback('$GNVTG', {
+        callback(['gps', 'new', 'vtc'], {
             'ground_speed_knots': parseFloat(msg[5]),
             'ground_speed_human': parseFloat(msg[7]),
         })
@@ -55,7 +55,7 @@ function parseGpsValues (
 
 export default function (
     line: string,
-    callback: (props: string, value: any) => void
+    callback: (props: string[], value: any) => void
 ) {
     parseGpsValues(line.split(','), callback);
 }

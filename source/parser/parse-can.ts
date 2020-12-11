@@ -216,7 +216,7 @@ export default function(
     const l = line.split(' ')[2].split('#');
     const canMessageValue = parseInt(l[1].padEnd(16, '0'), 16);
     
-    const id = parseInt(l[0]);
+    const id = parseInt(l[0], 16);
     const msgs = [
         (canMessageValue >> 56) & 0xFF,
         (canMessageValue >> 48) & 0xFF,
@@ -227,6 +227,5 @@ export default function(
         (canMessageValue >> 8) & 0xFF,
         (canMessageValue >> 0) & 0xFF,
     ];
-
     parseCanValues(id, msgs, callback);
 }
