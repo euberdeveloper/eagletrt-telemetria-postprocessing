@@ -5,7 +5,7 @@ import parseGps from '../parser/parse-gps'
 import parseDate from '../parser/parse-date'
 
 
-function parseCallback(result: any, props: string[], value: any, flat: boolean, timestamp: number | undefined = undefined) {
+function parseCallback(result: any, props: string[], value: any, flat: boolean, timestamp?: number) {
     if (flat) {
         if (result[props.join('.')]) {
             result[props.join('.')].push(parseValue(value, timestamp));
@@ -31,7 +31,7 @@ function parseCallback(result: any, props: string[], value: any, flat: boolean, 
     }
 }
 
-function parseValue(value: any, timestamp: number | undefined = undefined) {
+function parseValue(value: any, timestamp?: number) {
     if (timestamp) {
         return {
             timestamp: timestamp,
@@ -40,70 +40,6 @@ function parseValue(value: any, timestamp: number | undefined = undefined) {
     } else {
         return value;
     }
-}
-
-export function exportTest(canInputFilename: string | undefined, gpsInputFilename: string | undefined, outputFilename: string) {
-    const result: { [id: string]: any[] } = {}
-    if (canInputFilename) {
-        const lines = fs.readFileSync(canInputFilename).toString().split('\n');
-        for (const line of lines) {
-            parseCan(line, (p, v) => parseCallback(result, p, v, true))
-        }
-    }
-    if (gpsInputFilename) {
-        const lines = fs.readFileSync(gpsInputFilename).toString().split('\n');
-        for (const line of lines) {
-            parseGps(line, (p, v) => parseCallback(result, p, v, true))
-        }
-    }
-
-    const output: { message: string, values: any[] }[] = []
-    for (const key in result) {
-        output.push({
-            message: key,
-            values: result[key]
-        })
-    }
-    fs.writeFileSync(outputFilename, JSON.stringify(output, null, 4));
-}
-
-export function exportJSON(canInputFilename: string | undefined, gpsInputFilename: string | undefined, outputFilename: string) {
-    const result: object = {}
-    if (canInputFilename) {
-        const lines = fs.readFileSync(canInputFilename).toString().split('\n');
-        for (const line of lines) {
-            const timestamp = parseDate(line, ' ');
-            parseCan(line, (p, v) => parseCallback(result, p, v, false, timestamp));
-        }
-    }
-    if (gpsInputFilename) {
-        const lines = fs.readFileSync(gpsInputFilename).toString().split('\n');
-        for (const line of lines) {
-            const timestamp = parseDate(line, '\t');
-            parseGps(line, (p, v) => parseCallback(result, p, v, false, timestamp));
-        }
-    }
-    fs.writeFileSync(outputFilename, JSON.stringify(result, null, 4));
-}
-
-export function exportCSV(canInputFilename: string | undefined, gpsInputFilename: string | undefined, outputPath: string) {
-    const result: object = {}
-    if (canInputFilename) {
-        const lines = fs.readFileSync(canInputFilename).toString().split('\n');
-        for (const line of lines) {
-            const timestamp = parseDate(line, ' ');
-            parseCan(line, (p, v) => parseCallback(result, p, v, false, timestamp));
-        }
-    }
-    if (gpsInputFilename) {
-        const lines = fs.readFileSync(gpsInputFilename).toString().split('\n');
-        for (const line of lines) {
-            const timestamp = parseDate(line, '\t');
-            parseGps(line, (p, v) => parseCallback(result, p, v, false, timestamp));
-        }
-    }
-
-    recursiveCreateCSV(outputPath, result);
 }
 
 function recursiveCreateCSV(partialPath: string, partialResult: any) {
@@ -137,4 +73,86 @@ function recursiveCreateCSV(partialPath: string, partialResult: any) {
             recursiveCreateCSV(dir, partialResult[k]);
         }
     }
+}
+
+export function exportTest(canLogPath?: string, gpsLogPath?: string, outputFilename: string = 'result') {
+    const result: { [id: string]: any[] } = {}
+    if (canLogPath) {
+        canLogPath = path.resolve(canLogPath);
+        const lines = fs.readFileSync(canLogPath, 'utf-8').split('\n');
+        for (const line of lines) {
+            parseCan(line, (p, v) => parseCallback(result, p, v, true))
+        }
+    }
+
+    if (gpsLogPath) {
+        gpsLogPath = path.resolve(gpsLogPath);
+        const lines = fs.readFileSync(gpsLogPath, 'utf-8').split('\n');
+        for (const line of lines) {
+            parseGps(line, (p, v) => parseCallback(result, p, v, true))
+        }
+    }
+
+    const output: { message: string, values: any[] }[] = []
+    for (const key in result) {
+        output.push({
+            message: key,
+            values: result[key]
+        });
+    }
+
+    const outputPath = path.resolve(`${outputFilename}.expected.json`);
+    const outputText = JSON.stringify(output, null, 4);
+    fs.writeFileSync(outputPath, outputText);
+}
+
+export function exportJSON(canLogPath?: string, gpsLogPath?: string, outputFilename: string = 'result') {
+    const result: object = {}
+
+    if (canLogPath) {
+        canLogPath = path.resolve(canLogPath);
+        const lines = fs.readFileSync(canLogPath, 'utf-8').split('\n');
+        for (const line of lines) {
+            const timestamp = parseDate(line, ' ');
+            parseCan(line, (p, v) => parseCallback(result, p, v, false, timestamp));
+        }
+    }
+
+    if (gpsLogPath) {
+        gpsLogPath = path.resolve(gpsLogPath);
+        const lines = fs.readFileSync(gpsLogPath, 'utf-8').split('\n');
+        for (const line of lines) {
+            const timestamp = parseDate(line, '\t');
+            parseGps(line, (p, v) => parseCallback(result, p, v, false, timestamp));
+        }
+    }
+    
+    const outputPath = path.resolve(`${outputFilename}.json`);
+    const outputText = JSON.stringify(result, null, 4);
+    fs.writeFileSync(outputPath, outputText);
+}
+
+export function exportCSV(canLogPath?: string, gpsLogPath?: string, outputPath: string = 'result') {
+    const result: object = {}
+
+    if (canLogPath) {
+        canLogPath = path.resolve(canLogPath);
+        const lines = fs.readFileSync(canLogPath, 'utf-8').split('\n');
+        for (const line of lines) {
+            const timestamp = parseDate(line, ' ');
+            parseCan(line, (p, v) => parseCallback(result, p, v, false, timestamp));
+        }
+    }
+
+    if (gpsLogPath) {
+        gpsLogPath = path.resolve(gpsLogPath);
+        const lines = fs.readFileSync(gpsLogPath, 'utf-8').split('\n');
+        for (const line of lines) {
+            const timestamp = parseDate(line, '\t');
+            parseGps(line, (p, v) => parseCallback(result, p, v, false, timestamp));
+        }
+    }
+
+    outputPath = path.resolve(outputPath);
+    recursiveCreateCSV(outputPath, result);
 }
