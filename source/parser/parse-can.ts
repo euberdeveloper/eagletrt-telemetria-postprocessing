@@ -8,7 +8,7 @@ function parseCanValues(
     if (id === 0x181 || id === 0x182) {
         // speed
         if (msg[0] === 0xA8) {
-            let invrspeed = (msg[2] * 256 + msg[1])
+            let invrspeed = ((msg[2] << 8) + msg[1])
             if (invrspeed > 32768)
                 invrspeed -= 65536
             callback(['inverters', id === 0x181 ? 'right' : 'left', 'speed'], invrspeed)
@@ -16,17 +16,17 @@ function parseCanValues(
         // temperature_igbt
         if (msg[0] === 0x4A) {
             //TODO: check value
-            callback(['inverters', id === 0x181 ? 'right' : 'left', 'temperature_igbt'], (msg[2] * 256 + msg[1] - 15797) / 112.1182)
+            callback(['inverters', id === 0x181 ? 'right' : 'left', 'temperature_igbt'], ((msg[2] << 8) + msg[1] - 15797) / 112.1182)
         }
         // temperature_motors
         if (msg[0] === 0x49) {
             //TODO: check value
-            callback(['inverters', id === 0x181 ? 'right' : 'left', 'temperature_motors'], (msg[2] * 256 + msg[1] - 9393.9) / 55.1)
+            callback(['inverters', id === 0x181 ? 'right' : 'left', 'temperature_motors'], ((msg[2] << 8) + msg[1] - 9393.9) / 55.1)
         }
         // torque
         if (msg[0] === 0xA0) {
             //TODO: check value
-            callback(['inverters', id === 0x181 ? 'right' : 'left', 'torque'], (msg[2] * 256 + msg[1]))
+            callback(['inverters', id === 0x181 ? 'right' : 'left', 'torque'], ((msg[2] << 8) + msg[1]))
         }
     }
 
@@ -51,8 +51,8 @@ function parseCanValues(
         // current
         if (msg[0] === 0x05) {
             callback(['bms_hv', 'current'], {
-                'current': (msg[1] * 256 + msg[2]) / 10,
-                'pow': (msg[3] * 256 + msg[4]) / 10
+                'current': ((msg[1] << 8) + msg[2]) / 10,
+                'pow': ((msg[3] << 8) + msg[4]) / 10
             })
         }
         // errors warnings
@@ -96,7 +96,7 @@ function parseCanValues(
         }
         // << steering_wheel encoder
         if (msg[0] === 2) {
-            callback(['steering_wheel', 'encoder'], (msg[1] * 256 + msg[2]) / 100)
+            callback(['steering_wheel', 'encoder'], ((msg[1] << 8) + msg[2]) / 100)
         }
     }
 
@@ -119,44 +119,44 @@ function parseCanValues(
     // imu gyro
     if (id === 0x4EC) {
         const g2scale = 245
-        let g2x = (msg[0] * 256 + msg[1])
-        let g2y = (msg[2] * 256 + msg[3])
-        let g2z = (msg[4] * 256 + msg[5])
+        let g2x = ((msg[0] << 8) + msg[1])
+        let g2y = ((msg[2] << 8) + msg[3])
+        let g2z = ((msg[4] << 8) + msg[5])
         if (g2x > 32768)
             g2x -= 65536
         if (g2y > 32768)
             g2y -= 65536
         if (g2z > 32768)
             g2z -= 65536
-        g2x *= (g2scale / 65536)
-        g2y *= (g2scale / 65536)
-        g2z *= (g2scale / 65536)
+        // g2x *= (g2scale / 65536)
+        // g2y *= (g2scale / 65536)
+        // g2z *= (g2scale / 65536)
         callback(['imu', 'gyro'], {
-            'x': g2x,
-            'y': g2y,
-            'z': g2z
+            'x': g2x / 100,
+            'y': g2y / 100,
+            'z': g2z / 100
         })
     }
 
     // imu accel
     if (id === 0x4ED) {
         const a2scale = 8
-        let a2x = (msg[0] * 256 + msg[1])
-        let a2y = (msg[2] * 256 + msg[3])
-        let a2z = (msg[4] * 256 + msg[5])
+        let a2x = ((msg[0] << 8) + msg[1])
+        let a2y = ((msg[2] << 8) + msg[3])
+        let a2z = ((msg[4] << 8) + msg[5])
         if (a2x > 32768)
             a2x -= 65536
         if (a2y > 32768)
             a2y -= 65536
         if (a2z > 32768)
             a2z -= 65536
-        a2x *= (a2scale / 65536) * 100
-        a2y *= (a2scale / 65536) * 100
-        a2z *= (a2scale / 65536) * 100
+        // a2x *= (a2scale / 65536) * 100
+        // a2y *= (a2scale / 65536) * 100
+        // a2z *= (a2scale / 65536) * 100
         callback(['imu', 'accel'], {
-            'x': a2x,
-            'y': a2y,
-            'z': a2z
+            'x': a2x / 100,
+            'y': a2y / 100,
+            'z': a2z / 100
         })
     }
 
