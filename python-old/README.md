@@ -1,1 +1,0 @@
-# eagletrt-telemetria-validator
