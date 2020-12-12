@@ -2,17 +2,17 @@
 
 import * as yargs from 'yargs'
 import generater from '../index'
-import { EType } from '../types';
+import { OutputFormat } from '../types';
 
-function defaulFilename(type: EType) {
+function defaulFilename(type: OutputFormat) {
     switch (type) {
-        case EType.JSON: return 'resul.json';
-        case EType.CSV: return 'resul';
-        case EType.Test: return 'test-result.json';
+        case OutputFormat.JSON: return 'resul.json';
+        case OutputFormat.CSV: return 'resul';
+        case OutputFormat.Test: return 'test-result.json';
     }
 }
 
-function launchGenerator(argv: any, type: EType) {
+function launchGenerator(argv: any, type: OutputFormat) {
     const fileCan = argv.can as string | undefined;
     const fileGps = argv.gps as string | undefined;
     const outFile = (argv.out as string | undefined) ?? defaulFilename(type);
@@ -26,20 +26,20 @@ yargs
         'csv',
         'Generate csv',
         () => { return {}; },
-        (argv) => launchGenerator(argv, EType.CSV)
+        (argv) => launchGenerator(argv, OutputFormat.CSV)
     )
     .command(
         'json',
         'Generate json',
         () => { return {}; },
-        (argv) => launchGenerator(argv, EType.JSON)
+        (argv) => launchGenerator(argv, OutputFormat.JSON)
 
     )
     .command(
         'test',
         'Generate test',
         () => { return {}; },
-        (argv) => launchGenerator(argv, EType.Test)
+        (argv) => launchGenerator(argv, OutputFormat.Test)
     )
     .option({
         'can': {

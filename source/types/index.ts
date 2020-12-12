@@ -1,3 +1,3 @@
-export enum EType {
+export enum OutputFormat {
     CSV, JSON, Test
 }

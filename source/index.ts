@@ -1,16 +1,16 @@
-import { EType } from './types';
+import { OutputFormat } from './types';
 import { exportTest, exportJSON, exportCSV } from './exporter'
 
 
-export default function exportData(type: EType, canLogPath: string | undefined, gpsLogPath: string | undefined, outputPath: string) {
+export default function exportData(type: OutputFormat, canLogPath: string | undefined, gpsLogPath: string | undefined, outputPath: string) {
     switch (type) {
-        case EType.Test:
+        case OutputFormat.Test:
             exportTest(canLogPath, gpsLogPath, outputPath);
             break;
-        case EType.JSON:
+        case OutputFormat.JSON:
             exportJSON(canLogPath, gpsLogPath, outputPath);
             break;
-        case EType.CSV:
+        case OutputFormat.CSV:
             exportCSV(canLogPath, gpsLogPath, outputPath);
             break;
     }
