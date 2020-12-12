@@ -1,13 +1,11 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import { EType } from '../types';
 import parseCan from '../parser/parse-can'
 import parseGps from '../parser/parse-gps'
-import { type } from 'os';
+import parseDate from '../parser/parse-date'
 
 
-function parseCallback(result: any, props: string[], value: any, flat: boolean, timestamp: Date | undefined = undefined) {
-    // Test
+function parseCallback(result: any, props: string[], value: any, flat: boolean, timestamp: number | undefined = undefined) {
     if (flat) {
         if (result[props.join('.')]) {
             result[props.join('.')].push(parseValue(value, timestamp));
@@ -15,7 +13,7 @@ function parseCallback(result: any, props: string[], value: any, flat: boolean, 
             result[props.join('.')] = [parseValue(value, timestamp)];
         }
     } else {
-        //JSON
+
         let tempRes: any = result;
         let key = props.pop()!;
         for (const p of props) {
@@ -33,7 +31,7 @@ function parseCallback(result: any, props: string[], value: any, flat: boolean, 
     }
 }
 
-function parseValue(value: any, timestamp: Date | undefined = undefined) {
+function parseValue(value: any, timestamp: number | undefined = undefined) {
     if (timestamp) {
         return {
             timestamp: timestamp,
@@ -74,13 +72,15 @@ export function exportJSON(canInputFilename: string | undefined, gpsInputFilenam
     if (canInputFilename) {
         const lines = fs.readFileSync(canInputFilename).toString().split('\n');
         for (const line of lines) {
-            parseCan(line, (p, v) => parseCallback(result, p, v, false, new Date()));
+            const timestamp = parseDate(line);
+            parseCan(line, (p, v) => parseCallback(result, p, v, false, timestamp));
         }
     }
     if (gpsInputFilename) {
         const lines = fs.readFileSync(gpsInputFilename).toString().split('\n');
         for (const line of lines) {
-            parseGps(line, (p, v) => parseCallback(result, p, v, false, new Date()));
+            const timestamp = parseDate(line);
+            parseGps(line, (p, v) => parseCallback(result, p, v, false, timestamp));
         }
     }
     fs.writeFileSync(outputFilename, JSON.stringify(result));
@@ -91,13 +91,15 @@ export function exportCSV(canInputFilename: string | undefined, gpsInputFilename
     if (canInputFilename) {
         const lines = fs.readFileSync(canInputFilename).toString().split('\n');
         for (const line of lines) {
-            parseCan(line, (p, v) => parseCallback(result, p, v, false, new Date()));
+            const timestamp = parseDate(line);
+            parseCan(line, (p, v) => parseCallback(result, p, v, false, timestamp));
         }
     }
     if (gpsInputFilename) {
         const lines = fs.readFileSync(gpsInputFilename).toString().split('\n');
         for (const line of lines) {
-            parseGps(line, (p, v) => parseCallback(result, p, v, false, new Date()));
+            const timestamp = parseDate(line);
+            parseGps(line, (p, v) => parseCallback(result, p, v, false, timestamp));
         }
     }
 

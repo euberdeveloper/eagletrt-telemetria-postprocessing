@@ -209,23 +209,26 @@ function parseCanValues(
 
 }
 
-export default function(
+export default function (
     line: string,
     callback: (props: string[], value: any) => void
 ) {
-    const l = line.split(' ')[2].split('#');
-    const canMessageValue = parseInt(l[1].padEnd(16, '0'), 16);
-    
-    const id = parseInt(l[0], 16);
-    const msgs = [
-        (canMessageValue >> 56) & 0xFF,
-        (canMessageValue >> 48) & 0xFF,
-        (canMessageValue >> 40) & 0xFF,
-        (canMessageValue >> 32) & 0xFF,
-        (canMessageValue >> 24) & 0xFF,
-        (canMessageValue >> 16) & 0xFF,
-        (canMessageValue >> 8) & 0xFF,
-        (canMessageValue >> 0) & 0xFF,
-    ];
-    parseCanValues(id, msgs, callback);
+    const l = line.split(' ').pop()?.split('#');
+    if (l?.length === 2) {
+        const canMessageValue = parseInt(l[1].padEnd(16, '0'), 16);
+        const id = parseInt(l[0], 16);
+        const msgs = [
+            (canMessageValue >> 56) & 0xFF,
+            (canMessageValue >> 48) & 0xFF,
+            (canMessageValue >> 40) & 0xFF,
+            (canMessageValue >> 32) & 0xFF,
+            (canMessageValue >> 24) & 0xFF,
+            (canMessageValue >> 16) & 0xFF,
+            (canMessageValue >> 8) & 0xFF,
+            (canMessageValue >> 0) & 0xFF,
+        ];
+        parseCanValues(id, msgs, callback);
+    } else {
+        throw new Error(`Invalid can line: ${line}`)
+    }
 }
