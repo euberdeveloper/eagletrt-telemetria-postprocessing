@@ -6,7 +6,7 @@ function parseCoordinates(raw: string) {
     return left + right;
 }
 
-function parseGpsValues (
+function parseGpsValues(
     msg: string[],
     callback: (props: string[], value: any) => void
 ) {
@@ -17,11 +17,11 @@ function parseGpsValues (
             longitude: parseCoordinates(msg[4]),
             altitude: parseFloat(msg[11]),
             speed_knots: NaN,
-            course: NaN,
+            course: NaN
             // ew_indicator: msg[5],
             // status: parseInt(msg[6]),
             // ns_indicator: msg[3],
-        })
+        });
     }
 
     if (msg[0] === '$GNGLL') {
@@ -31,11 +31,11 @@ function parseGpsValues (
             longitude: parseCoordinates(msg[3]),
             altitude: NaN,
             speed_knots: NaN,
-            course: NaN,
+            course: NaN
             // ns_indicator: msg[2],
             // ew_indicator: msg[4],
             // status: msg[6] === 'A',
-        })
+        });
     }
 
     if (msg[0] === '$GNRMC') {
@@ -45,24 +45,24 @@ function parseGpsValues (
             longitude: parseCoordinates(msg[5]),
             altitude: NaN,
             speed_knots: parseFloat(msg[7]),
-            course: parseFloat(msg[8]),
+            course: parseFloat(msg[8])
             // status: msg[2] === 'A',
             // ns_indicator: msg[4],
             // ew_indicator: msg[6],
             // ground_speed_knots: parseFloat(msg[7]),
             // date: msg[9],
-        })
+        });
     }
 
     if (msg[0] === '$GNVTG') {
         callback(['gps', 'new', 'vtc'], {
             ground_speed_knots: parseFloat(msg[5]),
-            ground_speed_human: parseFloat(msg[7]),
-        })
+            ground_speed_human: parseFloat(msg[7])
+        });
     }
 }
 
-export default function (
+export default function(
     line: string,
     callback: (props: string[], value: any) => void
 ) {

@@ -8,25 +8,25 @@ function parseCanValues(
     if (id === 0x181 || id === 0x182) {
         // speed
         if (msg[0] === 0xA8) {
-            let invrspeed = ((msg[2] << 8) + msg[1])
+            let invrspeed = ((msg[2] << 8) + msg[1]);
             if (invrspeed > 32768)
-                invrspeed -= 65536
-            callback(['inverters', id === 0x181 ? 'right' : 'left', 'speed'], invrspeed)
+                invrspeed -= 65536;
+            callback(['inverters', id === 0x181 ? 'right' : 'left', 'speed'], invrspeed);
         }
         // temperature_igbt
         if (msg[0] === 0x4A) {
             //TODO: check value
-            callback(['inverters', id === 0x181 ? 'right' : 'left', 'temperature_igbt'], ((msg[2] << 8) + msg[1] - 15797) / 112.1182)
+            callback(['inverters', id === 0x181 ? 'right' : 'left', 'temperature_igbt'], ((msg[2] << 8) + msg[1] - 15797) / 112.1182);
         }
         // temperature_motors
         if (msg[0] === 0x49) {
             //TODO: check value
-            callback(['inverters', id === 0x181 ? 'right' : 'left', 'temperature_motors'], ((msg[2] << 8) + msg[1] - 9393.9) / 55.1)
+            callback(['inverters', id === 0x181 ? 'right' : 'left', 'temperature_motors'], ((msg[2] << 8) + msg[1] - 9393.9) / 55.1);
         }
         // torque
         if (msg[0] === 0xA0) {
             //TODO: check value
-            callback(['inverters', id === 0x181 ? 'right' : 'left', 'torque'], ((msg[2] << 8) + msg[1]))
+            callback(['inverters', id === 0x181 ? 'right' : 'left', 'torque'], ((msg[2] << 8) + msg[1]));
         }
     }
 
@@ -38,7 +38,7 @@ function parseCanValues(
                 'total': ((msg[1] << 16) + (msg[2] << 8) + msg[3]) / 10000,
                 'max': ((msg[4] << 8) + msg[5]) / 10000,
                 'min': ((msg[6] << 8) + msg[7]) / 10000
-            })
+            });
         }
         // temperature
         if (msg[0] === 0xA0) {
@@ -46,21 +46,21 @@ function parseCanValues(
                 'average': ((msg[1] << 8) + msg[2]) / 100,
                 'max': ((msg[3] << 8) + msg[4]) / 100,
                 'min': ((msg[5] << 8) + msg[6]) / 100
-            })
+            });
         }
         // current
         if (msg[0] === 0x05) {
             callback(['bms_hv', 'current'], {
                 'current': ((msg[1] << 8) + msg[2]) / 10,
                 'pow': ((msg[3] << 8) + msg[4]) / 10
-            })
+            });
         }
         // errors warnings
         if (msg[0] === 0x08 || msg[0] === 0x09) {
             callback(['bms_hv', msg[0] === 0x08 ? 'errors' : 'warnings'], {
                 'fault_id': msg[1],
                 'fault_index': msg[2] / 10
-            })
+            });
         }
     }
 
@@ -69,34 +69,34 @@ function parseCanValues(
         callback(['bms_lv', 'values'], {
             'voltage': msg[0] / 10,
             'temperature': msg[2] / 5
-        })
+        });
     }
 
     // imu_old
     if (id === 0xC0) {
         // accel
         if (msg[0] === 0) {
-            const ascale = msg[7]
+            const ascale = msg[7];
             callback(['imu_old', 'accel'], {
                 'x': ((msg[1] << 8 + msg[2]) / 100) - ascale,
                 'y': ((msg[3] << 8 + msg[4]) / 100) - ascale,
                 'z': ((msg[5] << 8 + msg[6]) / 100) - ascale,
                 'scale': ascale
-            })
+            });
         }
         // gyro
         if (msg[0] === 1) {
-            const gscale = msg[7] * 10
+            const gscale = msg[7] * 10;
             callback(['imu_old', 'gyro'], {
                 'x': ((msg[1] << 8 + msg[2]) / 10) - gscale,
                 'y': ((msg[3] << 8 + msg[4]) / 10) - gscale,
                 'z': ((msg[5] << 8 + msg[6]) / 10) - gscale,
                 'scale': gscale
-            })
+            });
         }
         // << steering_wheel encoder
         if (msg[0] === 2) {
-            callback(['steering_wheel', 'encoder'], ((msg[1] << 8) + msg[2]) / 100)
+            callback(['steering_wheel', 'encoder'], ((msg[1] << 8) + msg[2]) / 100);
         }
     }
 
@@ -104,30 +104,30 @@ function parseCanValues(
     if (id === 0xB0) {
         // throttle
         if (msg[0] === 0x01) {
-            callback(['pedals', 'throttle'], msg[1])
+            callback(['pedals', 'throttle'], msg[1]);
         }
         // brake
         if (msg[0] === 0x02) {
             callback(['pedals', 'brake'], {
                 'is_breaking': msg[1],
                 'pressure_front': ((msg[2] << 8) + msg[4]) / 500,
-                'pressure_back': ((msg[5] << 8) + msg[7]) / 500,
-            })
+                'pressure_back': ((msg[5] << 8) + msg[7]) / 500
+            });
         }
     }
 
     // imu gyro
     if (id === 0x4EC) {
-        const g2scale = 245
-        let g2x = ((msg[0] << 8) + msg[1])
-        let g2y = ((msg[2] << 8) + msg[3])
-        let g2z = ((msg[4] << 8) + msg[5])
+        const g2scale = 245;
+        let g2x = ((msg[0] << 8) + msg[1]);
+        let g2y = ((msg[2] << 8) + msg[3]);
+        let g2z = ((msg[4] << 8) + msg[5]);
         if (g2x > 32768)
-            g2x -= 65536
+            g2x -= 65536;
         if (g2y > 32768)
-            g2y -= 65536
+            g2y -= 65536;
         if (g2z > 32768)
-            g2z -= 65536
+            g2z -= 65536;
         // g2x *= (g2scale / 65536)
         // g2y *= (g2scale / 65536)
         // g2z *= (g2scale / 65536)
@@ -135,21 +135,21 @@ function parseCanValues(
             'x': g2x / 100,
             'y': g2y / 100,
             'z': g2z / 100
-        })
+        });
     }
 
     // imu accel
     if (id === 0x4ED) {
-        const a2scale = 8
-        let a2x = ((msg[0] << 8) + msg[1])
-        let a2y = ((msg[2] << 8) + msg[3])
-        let a2z = ((msg[4] << 8) + msg[5])
+        const a2scale = 8;
+        let a2x = ((msg[0] << 8) + msg[1]);
+        let a2y = ((msg[2] << 8) + msg[3]);
+        let a2z = ((msg[4] << 8) + msg[5]);
         if (a2x > 32768)
-            a2x -= 65536
+            a2x -= 65536;
         if (a2y > 32768)
-            a2y -= 65536
+            a2y -= 65536;
         if (a2z > 32768)
-            a2z -= 65536
+            a2z -= 65536;
         // a2x *= (a2scale / 65536) * 100
         // a2y *= (a2scale / 65536) * 100
         // a2z *= (a2scale / 65536) * 100
@@ -157,7 +157,7 @@ function parseCanValues(
             'x': a2x / 100,
             'y': a2y / 100,
             'z': a2z / 100
-        })
+        });
     }
 
     // front_wheels_encoders
@@ -167,14 +167,14 @@ function parseCanValues(
             callback(['front_wheels_encoders', id === 0xD0 ? 'right' : 'left', 'speed'], {
                 'speed': ((msg[1] << 8) + msg[2]) * (msg[3] === 0 ? 1 : -1),
                 'error_flag': msg[6]
-            })
+            });
         }
         // speed_rads
         if (msg[0] === 0x07) {
             callback(
                 ['front_wheels_encoders', id === 0xD0 ? 'right' : 'left', 'speed_rads'],
                 ((msg[1] << 16) + (msg[2] << 8) + msg[3]) / (msg[1] === 1 ? -10000 : 10000)
-            )
+            );
         }
         // angle
         if (msg[0] === 0x15) {
@@ -182,7 +182,7 @@ function parseCanValues(
                 'angle_0': ((msg[1] << 8) + msg[2]) / 100,
                 'angle_1': ((msg[3] << 8) + msg[4]) / 100,
                 'angle_delta': ((msg[5] << 8) + msg[6]) / 100
-            })
+            });
         }
     }
     // steering_wheel
@@ -193,7 +193,7 @@ function parseCanValues(
                 'control': msg[1],
                 'cooling': msg[2],
                 'map': msg[3]
-            })
+            });
         }
     }
 
@@ -204,12 +204,12 @@ function parseCanValues(
             'rotations': (msg[3] << 8) + msg[4],
             'angle': msg[5] & 0x0F,
             'clock_period': msg[6] & 0x0F
-        })
+        });
     }
 
 }
 
-export default function (
+export default function(
     line: string,
     callback: (props: string[], value: any) => void
 ) {
@@ -225,10 +225,11 @@ export default function (
             (canMessageValue >> 24) & 0xFF,
             (canMessageValue >> 16) & 0xFF,
             (canMessageValue >> 8) & 0xFF,
-            (canMessageValue >> 0) & 0xFF,
+            (canMessageValue >> 0) & 0xFF
         ];
         parseCanValues(id, msgs, callback);
-    } else {
-        throw new Error(`Invalid can line: ${line}`)
+    }
+    else {
+        throw new Error(`Invalid can line: ${line}`);
     }
 }
