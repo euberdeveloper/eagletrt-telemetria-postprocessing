@@ -1,3 +1,3 @@
 export enum OutputFormat {
-    CSV, JSON, Test
+    CSV, JSON, TEST
 }

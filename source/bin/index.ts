@@ -8,7 +8,7 @@ function defaulFilename(type: OutputFormat) {
     switch (type) {
         case OutputFormat.JSON: return 'resul.json';
         case OutputFormat.CSV: return 'resul';
-        case OutputFormat.Test: return 'test-result.json';
+        case OutputFormat.TEST: return 'test-result.json';
     }
 }
 
@@ -39,7 +39,7 @@ yargs
         'test',
         'Generate test',
         () => { return {}; },
-        (argv) => launchGenerator(argv, OutputFormat.Test)
+        (argv) => launchGenerator(argv, OutputFormat.TEST)
     )
     .option({
         'can': {

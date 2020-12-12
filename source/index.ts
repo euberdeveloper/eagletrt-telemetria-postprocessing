@@ -4,7 +4,7 @@ import { exportTest, exportJSON, exportCSV } from './exporter'
 
 export default function exportData(type: OutputFormat, canLogPath: string | undefined, gpsLogPath: string | undefined, outputPath: string) {
     switch (type) {
-        case OutputFormat.Test:
+        case OutputFormat.TEST:
             exportTest(canLogPath, gpsLogPath, outputPath);
             break;
         case OutputFormat.JSON:
