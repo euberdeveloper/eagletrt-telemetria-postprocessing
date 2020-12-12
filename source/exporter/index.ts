@@ -50,7 +50,7 @@ function recursiveCreateCSV(partialPath: string, partialResult: any) {
     for (const k in partialResult) {
         if (Array.isArray(partialResult[k])) {
             let header = undefined as string | undefined;
-            const lines: string[] = partialResult[k].map((l: { timestamp: string; value: string }) => {
+            const lines: string[] = partialResult[k].map((l: { timestamp: string; value: any }) => {
                 if (typeof l.value === 'object') {
                     if (!header) {
                         header = `timestamp\t${Object.keys(l.value).join('\t')}`;

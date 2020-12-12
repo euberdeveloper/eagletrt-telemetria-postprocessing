@@ -8,6 +8,7 @@ module.exports = {
     },
     extends: ['@euberdeveloper/typescript'],
     rules: {
-        '@typescript-eslint/naming-convention': 'off'
+        '@typescript-eslint/naming-convention': 'off',
+        '@typescript-eslint/restrict-template-expressions': 'off'
     }
 };
