@@ -1,9 +1,4 @@
-function parseCanValues(
-    id: number,
-    msg: number[],
-    callback: (props: string[], value: any) => void
-): void {
-
+function parseCanValues(id: number, msg: number[], callback: (props: string[], value: any) => void): void {
     // inverters right
     if (id === 0x181 || id === 0x182) {
         // speed
@@ -207,18 +202,22 @@ function parseCanValues(
 export default function(line: string, callback: (props: string[], value: any) => void): void {
     const l = line.split(' ').pop()?.split('#');
     if (l?.length === 2) {
-        const canMessageValue = parseInt(l[1].padEnd(16, '0'), 16);
+        const msgs = l[1]
+            .split('')
+            .reduce<string[][]>((acc, curr, i) => {
+            if (i % 2 === 0) {
+                acc.push([curr]);
+            }
+            else {
+                acc[Math.floor(i / 2)].push(curr);
+            }
+            return acc;
+        }, [])
+            .map(couple => couple.join(''))
+            .map(couple => parseInt(couple, 16));
+
         const id = parseInt(l[0], 16);
-        const msgs = [
-            (canMessageValue >> 56) & 0xFF,
-            (canMessageValue >> 48) & 0xFF,
-            (canMessageValue >> 40) & 0xFF,
-            (canMessageValue >> 32) & 0xFF,
-            (canMessageValue >> 24) & 0xFF,
-            (canMessageValue >> 16) & 0xFF,
-            (canMessageValue >> 8) & 0xFF,
-            (canMessageValue >> 0) & 0xFF
-        ];
+
         parseCanValues(id, msgs, callback);
     }
     else {
