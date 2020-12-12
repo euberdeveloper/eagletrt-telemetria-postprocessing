@@ -1,7 +1,6 @@
 import { OutputFormat } from './types';
 import { exportTest, exportJSON, exportCSV } from './exporter'
 
-
 export default function exportData(type: OutputFormat, canLogPath?: string, gpsLogPath?: string, outputPath: string = 'processed') {
     switch (type) {
         case OutputFormat.TEST:
