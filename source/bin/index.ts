@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import * as yargs from 'yargs'
 import generater from '../index'
 import { EType } from '../types';
