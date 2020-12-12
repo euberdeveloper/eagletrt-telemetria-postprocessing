@@ -1,5 +1,3 @@
-import { GPSData } from '../types';
-
 function parseCoordinates(raw: string) {
     let value = parseFloat(raw);
     const temp = +value / 100;
@@ -10,7 +8,7 @@ function parseCoordinates(raw: string) {
 
 function parseGpsValues (
     msg: string[],
-    callback: (props: string[], value: GPSData) => void
+    callback: (props: string[], value: any) => void
 ) {
     if (msg[0] === '$GNGGA') {
         callback(['gps', 'new', 'gga'], {
@@ -56,17 +54,18 @@ function parseGpsValues (
         })
     }
 
-    // if (msg[0] === '$GNVTG') {
-    //     callback(['gps', 'new', 'vtc'], {
-    //         ground_speed_knots: parseFloat(msg[5]),
-    //         ground_speed_human: parseFloat(msg[7]),
-    //     })
-    // }
+    if (msg[0] === '$GNVTG') {
+        callback(['gps', 'new', 'vtc'], {
+            ground_speed_knots: parseFloat(msg[5]),
+            ground_speed_human: parseFloat(msg[7]),
+        })
+    }
 }
 
 export default function (
     line: string,
     callback: (props: string[], value: any) => void
 ) {
-    parseGpsValues(line.split(','), callback);
+    if (line)
+        parseGpsValues(line.split('\t').pop()?.split(',') ?? [], callback);
 }

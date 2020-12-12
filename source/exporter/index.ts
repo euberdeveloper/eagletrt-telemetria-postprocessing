@@ -64,7 +64,7 @@ export function exportTest(canInputFilename: string | undefined, gpsInputFilenam
             values: result[key]
         })
     }
-    fs.writeFileSync(outputFilename, JSON.stringify(output));
+    fs.writeFileSync(outputFilename, JSON.stringify(output, null, 4));
 }
 
 export function exportJSON(canInputFilename: string | undefined, gpsInputFilename: string | undefined, outputFilename: string) {
@@ -72,18 +72,18 @@ export function exportJSON(canInputFilename: string | undefined, gpsInputFilenam
     if (canInputFilename) {
         const lines = fs.readFileSync(canInputFilename).toString().split('\n');
         for (const line of lines) {
-            const timestamp = parseDate(line);
+            const timestamp = parseDate(line, ' ');
             parseCan(line, (p, v) => parseCallback(result, p, v, false, timestamp));
         }
     }
     if (gpsInputFilename) {
         const lines = fs.readFileSync(gpsInputFilename).toString().split('\n');
         for (const line of lines) {
-            const timestamp = parseDate(line);
+            const timestamp = parseDate(line, '\t');
             parseGps(line, (p, v) => parseCallback(result, p, v, false, timestamp));
         }
     }
-    fs.writeFileSync(outputFilename, JSON.stringify(result));
+    fs.writeFileSync(outputFilename, JSON.stringify(result, null, 4));
 }
 
 export function exportCSV(canInputFilename: string | undefined, gpsInputFilename: string | undefined, outputPath: string) {
@@ -91,14 +91,14 @@ export function exportCSV(canInputFilename: string | undefined, gpsInputFilename
     if (canInputFilename) {
         const lines = fs.readFileSync(canInputFilename).toString().split('\n');
         for (const line of lines) {
-            const timestamp = parseDate(line);
+            const timestamp = parseDate(line, ' ');
             parseCan(line, (p, v) => parseCallback(result, p, v, false, timestamp));
         }
     }
     if (gpsInputFilename) {
         const lines = fs.readFileSync(gpsInputFilename).toString().split('\n');
         for (const line of lines) {
-            const timestamp = parseDate(line);
+            const timestamp = parseDate(line, '\t');
             parseGps(line, (p, v) => parseCallback(result, p, v, false, timestamp));
         }
     }
