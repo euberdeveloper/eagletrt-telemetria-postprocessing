@@ -1,4 +1,3 @@
-
 const timestampPattern = new RegExp('^\\(?[0-9]+\\.[0-9]+\\)?$');
 
 export default function parseDate(line: string, dateCharSeparator: string): number {

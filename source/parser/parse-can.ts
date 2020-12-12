@@ -2,7 +2,7 @@ function parseCanValues(
     id: number,
     msg: number[],
     callback: (props: string[], value: any) => void
-) {
+): void {
 
     // inverters right
     if (id === 0x181 || id === 0x182) {
@@ -118,7 +118,6 @@ function parseCanValues(
 
     // imu gyro
     if (id === 0x4EC) {
-        const g2scale = 245;
         let g2x = ((msg[0] << 8) + msg[1]);
         let g2y = ((msg[2] << 8) + msg[3]);
         let g2z = ((msg[4] << 8) + msg[5]);
@@ -128,9 +127,6 @@ function parseCanValues(
             g2y -= 65536;
         if (g2z > 32768)
             g2z -= 65536;
-        // g2x *= (g2scale / 65536)
-        // g2y *= (g2scale / 65536)
-        // g2z *= (g2scale / 65536)
         callback(['imu', 'gyro'], {
             'x': g2x / 100,
             'y': g2y / 100,
@@ -140,7 +136,6 @@ function parseCanValues(
 
     // imu accel
     if (id === 0x4ED) {
-        const a2scale = 8;
         let a2x = ((msg[0] << 8) + msg[1]);
         let a2y = ((msg[2] << 8) + msg[3]);
         let a2z = ((msg[4] << 8) + msg[5]);
@@ -209,10 +204,7 @@ function parseCanValues(
 
 }
 
-export default function(
-    line: string,
-    callback: (props: string[], value: any) => void
-) {
+export default function(line: string, callback: (props: string[], value: any) => void): void {
     const l = line.split(' ').pop()?.split('#');
     if (l?.length === 2) {
         const canMessageValue = parseInt(l[1].padEnd(16, '0'), 16);

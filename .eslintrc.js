@@ -6,5 +6,8 @@ module.exports = {
         sourceType: 'module',
         project: path.join(__dirname, 'tsconfig.json')
     },
-    extends: ['@euberdeveloper/typescript']
+    extends: ['@euberdeveloper/typescript'],
+    rules: {
+        '@typescript-eslint/naming-convention': 'off'
+    }
 };

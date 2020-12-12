@@ -1,4 +1,4 @@
-function parseCoordinates(raw: string) {
+function parseCoordinates(raw: string): number {
     let value = parseFloat(raw);
     const temp = +value / 100;
     const left = Math.floor(temp);
@@ -9,7 +9,7 @@ function parseCoordinates(raw: string) {
 function parseGpsValues(
     msg: string[],
     callback: (props: string[], value: any) => void
-) {
+): void {
     if (msg[0] === '$GNGGA') {
         callback(['gps', 'new', 'gga'], {
             utc_time: parseFloat(msg[1]),
@@ -65,7 +65,8 @@ function parseGpsValues(
 export default function(
     line: string,
     callback: (props: string[], value: any) => void
-) {
-    if (line)
+): void {
+    if (line) {
         parseGpsValues(line.split('\t').pop()?.split(',') ?? [], callback);
+    }
 }

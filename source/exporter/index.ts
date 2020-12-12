@@ -5,6 +5,18 @@ import parseGps from '../parser/parse-gps';
 import parseDate from '../parser/parse-date';
 
 
+function parseValue(value: any, timestamp?: number) {
+    if (timestamp) {
+        return {
+            timestamp: timestamp,
+            value: value
+        };
+    }
+    else {
+        return value;
+    }
+}
+
 function parseCallback(result: any, props: string[], value: any, flat: boolean, timestamp?: number) {
     if (flat) {
         if (result[props.join('.')]) {
@@ -34,23 +46,11 @@ function parseCallback(result: any, props: string[], value: any, flat: boolean, 
     }
 }
 
-function parseValue(value: any, timestamp?: number) {
-    if (timestamp) {
-        return {
-            timestamp: timestamp,
-            value: value
-        };
-    }
-    else {
-        return value;
-    }
-}
-
 function recursiveCreateCSV(partialPath: string, partialResult: any) {
     for (const k in partialResult) {
         if (Array.isArray(partialResult[k])) {
             let header = undefined as string | undefined;
-            const lines: string[] = partialResult[k].map((l: { timestamp: Date; value: any }) => {
+            const lines: string[] = partialResult[k].map((l: { timestamp: string; value: string }) => {
                 if (typeof l.value === 'object') {
                     if (!header) {
                         header = `timestamp\t${Object.keys(l.value).join('\t')}`;
@@ -81,7 +81,7 @@ function recursiveCreateCSV(partialPath: string, partialResult: any) {
     }
 }
 
-export function exportTest(canLogPath?: string, gpsLogPath?: string, outputFilename = 'processed') {
+export function exportTest(canLogPath?: string, gpsLogPath?: string, outputFilename = 'processed'): void {
     const result: { [id: string]: any[] } = {};
     if (canLogPath) {
         canLogPath = path.resolve(canLogPath);
@@ -112,8 +112,8 @@ export function exportTest(canLogPath?: string, gpsLogPath?: string, outputFilen
     fs.writeFileSync(outputPath, outputText);
 }
 
-export function exportJSON(canLogPath?: string, gpsLogPath?: string, outputFilename = 'processed') {
-    const result: object = {};
+export function exportJSON(canLogPath?: string, gpsLogPath?: string, outputFilename = 'processed'): void {
+    const result: any = {};
 
     if (canLogPath) {
         canLogPath = path.resolve(canLogPath);
@@ -138,8 +138,8 @@ export function exportJSON(canLogPath?: string, gpsLogPath?: string, outputFilen
     fs.writeFileSync(outputPath, outputText);
 }
 
-export function exportCSV(canLogPath?: string, gpsLogPath?: string, outputPath = 'processed') {
-    const result: object = {};
+export function exportCSV(canLogPath?: string, gpsLogPath?: string, outputPath = 'processed'): void {
+    const result: any = {};
 
     if (canLogPath) {
         canLogPath = path.resolve(canLogPath);
