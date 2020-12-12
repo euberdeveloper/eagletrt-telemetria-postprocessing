@@ -75,7 +75,7 @@ function recursiveCreateCSV(partialPath: string, partialResult: any) {
     }
 }
 
-export function exportTest(canLogPath?: string, gpsLogPath?: string, outputFilename: string = 'result') {
+export function exportTest(canLogPath?: string, gpsLogPath?: string, outputFilename: string = 'processed') {
     const result: { [id: string]: any[] } = {}
     if (canLogPath) {
         canLogPath = path.resolve(canLogPath);
@@ -106,7 +106,7 @@ export function exportTest(canLogPath?: string, gpsLogPath?: string, outputFilen
     fs.writeFileSync(outputPath, outputText);
 }
 
-export function exportJSON(canLogPath?: string, gpsLogPath?: string, outputFilename: string = 'result') {
+export function exportJSON(canLogPath?: string, gpsLogPath?: string, outputFilename: string = 'processed') {
     const result: object = {}
 
     if (canLogPath) {
@@ -132,7 +132,7 @@ export function exportJSON(canLogPath?: string, gpsLogPath?: string, outputFilen
     fs.writeFileSync(outputPath, outputText);
 }
 
-export function exportCSV(canLogPath?: string, gpsLogPath?: string, outputPath: string = 'result') {
+export function exportCSV(canLogPath?: string, gpsLogPath?: string, outputPath: string = 'processed') {
     const result: object = {}
 
     if (canLogPath) {
