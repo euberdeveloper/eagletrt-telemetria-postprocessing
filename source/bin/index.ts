@@ -1,69 +1,88 @@
 #!/usr/bin/env node
-
 import * as yargs from 'yargs';
-import generater from '../index';
-import { OutputFormat } from '../types';
 
-function defaulFilename(type: OutputFormat) {
-    switch (type) {
-        case OutputFormat.JSON: return 'resul.json';
-        case OutputFormat.CSV: return 'resul';
-        case OutputFormat.TEST: return 'test-result.json';
-    }
-}
-
-function launchGenerator(argv: any, type: OutputFormat) {
-    const fileCan = argv.can as string | undefined;
-    const fileGps = argv.gps as string | undefined;
-    const outFile = (argv.out as string | undefined) ?? defaulFilename(type);
-    if (fileCan || fileGps)
-        generater(type, fileCan, fileGps, outFile);
-}
+import { processLogsForTest, processLogsToJson, processLogsToCsv } from '../lib';
 
 yargs
-    .scriptName('eagletst-process')
+    .scriptName('eagletrt-process')
     .command(
         'csv',
-        'Generate csv',
+        'Generate csv files from a can and/or gps log',
         () => {
             return {}; 
         },
-        (argv) => launchGenerator(argv, OutputFormat.CSV)
+        argv => {
+            const args: any = argv;
+
+            const canLogPath = args.can;
+            const gpsLogPath = args.gps;
+            const outputPath = args.out;
+            const throwError = args.strict;
+
+            processLogsToCsv(canLogPath, gpsLogPath, outputPath, throwError);
+        }
     )
     .command(
         'json',
-        'Generate json',
+        'Generate a json file from a can and/or gps log',
         () => {
             return {}; 
         },
-        (argv) => launchGenerator(argv, OutputFormat.JSON)
+        argv => {
+            const args: any = argv;
+
+            const canLogPath = args.can;
+            const gpsLogPath = args.gps;
+            const outputPath = args.out;
+            const throwError = args.strict;
+
+            processLogsToJson(canLogPath, gpsLogPath, outputPath, throwError);
+        }
 
     )
     .command(
         'test',
-        'Generate test',
+        'Generate a .expected.json file to be used from the telemetry general test from a can and/or gps log',
         () => {
             return {}; 
         },
-        (argv) => launchGenerator(argv, OutputFormat.TEST)
+        argv => {
+            const args: any = argv;
+
+            const canLogPath = args.can;
+            const gpsLogPath = args.gps;
+            const outputPath = args.out;
+            const throwError = args.strict;
+
+            processLogsForTest(canLogPath, gpsLogPath, outputPath, throwError);
+        }
     )
     .option({
         'can': {
-            alias: 'l',
-            describe: 'Log file',
-            type: 'string'
+            alias: 'c',
+            describe: 'The can log file',
+            type: 'string',
+            default: undefined
         },
         'gps': {
             alias: 'g',
-            describe: 'Gps file',
-            type: 'string'
+            describe: 'The gps log file',
+            type: 'string',
+            default: undefined
         },
         'out': {
             alias: 'o',
-            describe: 'Output file or directory',
+            describe: 'The path of the output file or directory',
             type: 'string',
-            default: undefined
+            default: 'result'
+        },
+        'strict': {
+            alias: 's',
+            describe: 'If the command will fail in case of invalid log rows',
+            type: 'boolean',
+            default: false
         }
     })
-    .epilogue('For more information, find our manual at https://github.com/euberdeveloper/eagletrt-code-generator#readme')
+    .demandCommand(1, 'You must enter a command')
+    .epilogue('For more information, find our manual at https://github.com/eagletrt/eagletrt-telemetria-postprocessing#readme')
     .argv;
