@@ -35,13 +35,13 @@ const PARSE_BMS_HV_CURRENT: CanMessageParser = msg => ({
 });
 const PARSE_BMS_HV_ERROR_WARNINGS: CanMessageParser = msg => ({
     fault_id: msg[1],
-    fault_index: msg[2] / 10
+    fault_index: Math.abs(msg[2] / 10)
 });
 
 /* BMS_LV*/
 const PARSE_BMS_LV_VALUES: CanMessageParser = msg => ({
-    voltage: msg[0] / 10,
-    temperature: msg[2] / 5
+    temperature: msg[2] / 5,
+    voltage: msg[0] / 10
 });
 
 /* IMU OLD */
@@ -88,7 +88,7 @@ const PARSE_FRONT_WHEELS_ENCODERS_SPEED: CanMessageParser = msg => ({
     error_flag: msg[6]
 });
 const PARSE_FRONT_WHEELS_ENCODERS_SPEED_RADS: CanMessageParser =
-    msg => ((msg[1] << 16) + (msg[2] << 8) + msg[3]) / (msg[1] === 1 ? -10000 : 10000);
+    msg => ((msg[1] << 16) + (msg[2] << 8) + msg[3]) / (msg[7] === 1 ? -10000 : 10000);
 const PARSE_FRONT_WHEELS_ENCODERS_ANGLE: CanMessageParser = msg => ({
     angle_0: ((msg[1] << 8) + msg[2]) / 100,
     angle_1: ((msg[3] << 8) + msg[4]) / 100,
