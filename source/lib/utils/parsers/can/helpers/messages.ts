@@ -109,7 +109,6 @@ const STEERING_WHEEL_GEARS: CanMessageParser = msg => ({
 });
 
 // Export structure
-
 export default [
     /* INVERTERS RIGHT */
     {
