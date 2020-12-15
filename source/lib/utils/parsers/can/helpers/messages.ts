@@ -171,7 +171,7 @@ export default [
     {
         message: 'bms_hv.temperature',
         id: 0xAA,
-        fb: 0xA0,
+        fb: 0x0A,
         parser: PARSE_BMS_HV_TEMPERATURE
     },
     {
