@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/indent */
-import { EagletrtPostProcessingInvalidCanRowError, EagletrtPostProcessingInvalidCanRowTimestampError } from '../../../errors';
+import {
+    EagletrtPostProcessingInvalidCanRowError,
+    EagletrtPostProcessingInvalidCanRowTimestampError
+} from '../../../errors';
 
 import { Message } from '..';
 import { extractTimestamp } from '../../timestamp';
@@ -10,21 +13,20 @@ function parseMessage(id: number, fb: number, msg: number[]): Message | null {
 
     return message
         ? {
-            message: message.message,
-            value: message.parser(msg)
-        }
+              message: message.message,
+              value: message.parser(msg)
+          }
         : null;
 }
 
 function getMsg(body: string): number[] {
-    return body.
-        padEnd(16, '0')
+    return body
+        .padEnd(16, '0')
         .split('')
         .reduce<string[][]>((acc, curr, i) => {
             if (i % 2 === 0) {
                 acc.push([curr]);
-            }
-            else {
+            } else {
                 acc[Math.floor(i / 2)].push(curr);
             }
             return acc;
@@ -48,8 +50,7 @@ function parseLine(line: string, keepTimestamps: boolean, throwError: boolean): 
 
             if (timestamp) {
                 message.timestamp = timestamp;
-            }
-            else {
+            } else {
                 console.log('warning timestapm', line);
                 if (throwError) {
                     throw new EagletrtPostProcessingInvalidCanRowTimestampError(undefined, line);
@@ -59,8 +60,7 @@ function parseLine(line: string, keepTimestamps: boolean, throwError: boolean): 
         }
 
         return message;
-    }
-    else {
+    } else {
         if (!!line.trim()) {
             console.log('warning', line);
             if (throwError) {

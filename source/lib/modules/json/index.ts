@@ -20,26 +20,36 @@ function addMessage(result: JsonResult, message: Message): void {
     result.push({ timestamp: message.timestamp, value: message.value });
 }
 
-export function processLogsToJson(canLogPath: string | null, gpsLogPath: string | null, outputPath = 'result', throwError = false): void {
+export function processLogsToJson(
+    canLogPath: string | null,
+    gpsLogPath: string | null,
+    outputPath = 'result',
+    throwError = false
+): void {
     let result: JsonResult = {};
 
     if (canLogPath) {
         canLogPath = path.resolve(canLogPath);
 
         let text = fs.readFileSync(canLogPath, 'utf-8');
-        let messages = parseCanLog(text, true, throwError); text = '';
-        messages.forEach(message => addMessage(result, message)); messages = [];
+        let messages = parseCanLog(text, true, throwError);
+        text = '';
+        messages.forEach(message => addMessage(result, message));
+        messages = [];
     }
 
     if (gpsLogPath) {
         gpsLogPath = path.resolve(gpsLogPath);
 
         let text = fs.readFileSync(gpsLogPath, 'utf-8');
-        let messages = parseGpsLog(text, true, throwError); text = '';
-        messages.forEach(message => addMessage(result, message)); messages = [];
+        let messages = parseGpsLog(text, true, throwError);
+        text = '';
+        messages.forEach(message => addMessage(result, message));
+        messages = [];
     }
 
-    const resultText = JSON.stringify(result); result = {};
+    const resultText = JSON.stringify(result);
+    result = {};
 
     outputPath = path.resolve(`${outputPath}.json`);
     fs.writeFileSync(outputPath, resultText);

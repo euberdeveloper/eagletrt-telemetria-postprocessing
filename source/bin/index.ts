@@ -9,7 +9,7 @@ yargs
         'csv',
         'Generate csv files from a can and/or gps log',
         () => {
-            return {}; 
+            return {};
         },
         argv => {
             const args: any = argv;
@@ -26,7 +26,7 @@ yargs
         'json',
         'Generate a json file from a can and/or gps log',
         () => {
-            return {}; 
+            return {};
         },
         argv => {
             const args: any = argv;
@@ -38,13 +38,12 @@ yargs
 
             processLogsToJson(canLogPath, gpsLogPath, outputPath, throwError);
         }
-
     )
     .command(
         'test',
         'Generate a .expected.json file to be used from the telemetry general test from a can and/or gps log',
         () => {
-            return {}; 
+            return {};
         },
         argv => {
             const args: any = argv;
@@ -58,25 +57,25 @@ yargs
         }
     )
     .option({
-        'can': {
+        can: {
             alias: 'c',
             describe: 'The can log file',
             type: 'string',
             default: undefined
         },
-        'gps': {
+        gps: {
             alias: 'g',
             describe: 'The gps log file',
             type: 'string',
             default: undefined
         },
-        'out': {
+        out: {
             alias: 'o',
             describe: 'The path of the output file or directory',
             type: 'string',
             default: 'result'
         },
-        'strict': {
+        strict: {
             alias: 's',
             describe: 'If the command will fail in case of invalid log rows',
             type: 'boolean',
@@ -84,5 +83,6 @@ yargs
         }
     })
     .demandCommand(1, 'You must enter a command')
-    .epilogue('For more information, find our manual at https://github.com/eagletrt/eagletrt-telemetria-postprocessing#readme')
-    .argv;
+    .epilogue(
+        'For more information, find our manual at https://github.com/eagletrt/eagletrt-telemetria-postprocessing#readme'
+    ).argv;

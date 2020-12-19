@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/indent */
-import { EagletrtPostProcessingInvalidGpsRowError, EagletrtPostProcessingInvalidGpsRowTimestampError } from '../../../errors';
+import {
+    EagletrtPostProcessingInvalidGpsRowError,
+    EagletrtPostProcessingInvalidGpsRowTimestampError
+} from '../../../errors';
 
 import { Message } from '..';
 import { extractTimestamp } from '../../timestamp';
@@ -10,13 +13,13 @@ function parseMessage(type: string, msg: string[]): Message | null {
 
     return message
         ? {
-            message: message.message,
-            value: message.parser(msg)
-        }
+              message: message.message,
+              value: message.parser(msg)
+          }
         : null;
 }
 
-function parseLine(line: string, keepTimestamps: boolean,throwError: boolean): Message | null {
+function parseLine(line: string, keepTimestamps: boolean, throwError: boolean): Message | null {
     const pattern = /\$\w{2}(?<type>\w{3}),(?<body>.*)/;
     const patternResult = pattern.exec(line)?.groups;
 
@@ -35,8 +38,7 @@ function parseLine(line: string, keepTimestamps: boolean,throwError: boolean): M
 
             if (timestamp) {
                 message.timestamp = timestamp;
-            }
-            else {
+            } else {
                 console.log('warning timestapm', line);
                 if (throwError) {
                     throw new EagletrtPostProcessingInvalidGpsRowTimestampError(undefined, line);
@@ -46,8 +48,7 @@ function parseLine(line: string, keepTimestamps: boolean,throwError: boolean): M
         }
 
         return message;
-    }
-    else {
+    } else {
         if (!!line) {
             console.log('warning', line);
             if (throwError) {

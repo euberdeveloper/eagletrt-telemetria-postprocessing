@@ -30,22 +30,17 @@ function writeCsvFile(csvPath: string, messages: CsvMessage[]): void {
 
     const header = ['timestamp', ...messageKeys];
     const values = messages.map(message => [
-        message.timestamp, 
-        ...(messageKeys.length === 1 
-            ? [message.value] 
-            : messageKeys.map(key => message.value[key]))
-        ]
-    );
+        message.timestamp,
+        ...(messageKeys.length === 1 ? [message.value] : messageKeys.map(key => message.value[key]))
+    ]);
 
-    const text = [header, ...values]
-        .map(line => line.join('\t'))
-        .join('\n');
+    const text = [header, ...values].map(line => line.join('\t')).join('\n');
 
     const parentDir = path.dirname(csvPath);
     if (!fs.existsSync(parentDir)) {
         fs.mkdirSync(parentDir, { recursive: true });
     }
-    
+
     fs.writeFileSync(csvPath, text);
 }
 
@@ -56,31 +51,39 @@ function writeCsvFiles(outPath: string, obj: CsvResult): void {
         if (Array.isArray(message)) {
             const csvPath = path.join(outPath, `${key}.csv`);
             writeCsvFile(csvPath, message);
-        }
-        else {
+        } else {
             const csvPath = path.join(outPath, key);
             writeCsvFiles(csvPath, message);
         }
     }
 }
 
-export function processLogsToCsv(canLogPath: string | null, gpsLogPath: string | null, outputPath = 'result', throwError = false): void {
+export function processLogsToCsv(
+    canLogPath: string | null,
+    gpsLogPath: string | null,
+    outputPath = 'result',
+    throwError = false
+): void {
     let result: CsvResult = {};
 
     if (canLogPath) {
         canLogPath = path.resolve(canLogPath);
 
         let text = fs.readFileSync(canLogPath, 'utf-8');
-        let messages = parseCanLog(text, true, throwError); text = '';
-        messages.forEach(message => addMessage(result, message)); messages = [];
+        let messages = parseCanLog(text, true, throwError);
+        text = '';
+        messages.forEach(message => addMessage(result, message));
+        messages = [];
     }
 
     if (gpsLogPath) {
         gpsLogPath = path.resolve(gpsLogPath);
 
         let text = fs.readFileSync(gpsLogPath, 'utf-8');
-        let messages = parseGpsLog(text, true, throwError); text = '';
-        messages.forEach(message => addMessage(result, message)); messages = [];
+        let messages = parseGpsLog(text, true, throwError);
+        text = '';
+        messages.forEach(message => addMessage(result, message));
+        messages = [];
     }
 
     outputPath = path.resolve(outputPath);

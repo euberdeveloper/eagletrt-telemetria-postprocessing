@@ -6,9 +6,46 @@ module.exports = {
         sourceType: 'module',
         project: path.join(__dirname, 'tsconfig.json')
     },
-    extends: ['@euberdeveloper/typescript'],
+    plugins: ['prettier'],
+    extends: [
+        '@euberdeveloper/typescript',
+        'prettier/@typescript-eslint',
+        'plugin:prettier/recommended'
+    ],
     rules: {
-        '@typescript-eslint/naming-convention': 'off',
+        '@typescript-eslint/naming-convention': ['error',
+            {
+                selector: 'default',
+                format: ['camelCase'],
+                leadingUnderscore: 'allow',
+                trailingUnderscore: 'allow',
+            },
+            {
+                selector: 'variable',
+                format: ['camelCase'],
+                leadingUnderscore: 'allow',
+                trailingUnderscore: 'allow',
+            },
+            {
+                selector: 'variable',
+                modifiers: ['const'],
+                format: ['camelCase', 'UPPER_CASE'],
+                leadingUnderscore: 'allow',
+                trailingUnderscore: 'allow',
+            },
+            {
+                selector: 'objectLiteralProperty',
+                format: ['camelCase', 'snake_case'],
+            },
+            {
+                selector: 'typeLike',
+                format: ['PascalCase'],
+            },
+            {
+                selector: 'enumMember',
+                format: ['UPPER_CASE'],
+            }
+        ],
         '@typescript-eslint/restrict-template-expressions': 'off'
     }
 };
