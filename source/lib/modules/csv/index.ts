@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/indent */
 import * as fs from 'fs';
 import * as path from 'path';
 import { Message, parseCanLog, parseGpsLog } from '../../utils/parsers';
