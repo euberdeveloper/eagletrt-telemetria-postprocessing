@@ -1,0 +1,219 @@
+{
+    "inverters": {
+        "right": {
+            "speed": {
+                "type": "can",
+                "id": "0x181",
+                "fb": "0xA8",
+                "parser": "PARSE_INVERTERS_SPEED"
+            },
+            "temperature_igbt": {
+                "type": "can",
+                "id": "0x181",
+                "fb": "0x4A",
+                "parser": "PARSE_INVERTERS_TEMPERATURE_IGBT"
+            },
+            "temperature_motors":  {
+                "type": "can",
+                "id": "0x181",
+                "fb": "0x49",
+                "parser": "PARSE_INVERTERS_TEMPERATURE_MOTORS"
+            },
+            "torque":  {
+                "type": "can",
+                "id": "0x181",
+                "fb": "0xA0",
+                "parser": "PARSE_INVERTERS_TORQUE"
+            }
+        },
+        "left": {
+            "speed": {
+                "type": "can",
+                "id": "0x182",
+                "fb": "0xA8",
+                "parser": "PARSE_INVERTERS_SPEED"
+            },
+            "temperature_igbt": {
+                "type": "can",
+                "id": "0x182",
+                "fb": "0x4A",
+                "parser": "PARSE_INVERTERS_TEMPERATURE_IGBT"
+            },
+            "temperature_motors":  {
+                "type": "can",
+                "id": "0x182",
+                "fb": "0x49",
+                "parser": "PARSE_INVERTERS_TEMPERATURE_MOTORS"
+            },
+            "torque":  {
+                "type": "can",
+                "id": "0x182",
+                "fb": "0xA0",
+                "parser": "PARSE_INVERTERS_TORQUE"
+            }
+        }
+    },
+    "bms_hv": {
+        "temperature": {
+            "type": "can",
+            "id": "0xAA",
+            "fb": "0x01",
+            "parser": "PARSE_BMS_HV_VOLTAGE"
+        },
+        "voltage": {
+            "type": "can",
+            "id": "0xAA",
+            "fb": "0x0a",
+            "parser": "PARSE_BMS_HV_TEMPERATURE"
+        },
+        "current": {
+            "type": "can",
+            "id": "0xAA",
+            "fb": "0x05",
+            "parser": "PARSE_BMS_HV_CURRENT"
+        },
+        "errors": {
+            "type": "can",
+            "id": "0xAA",
+            "fb": "0x08",
+            "parser": "PARSE_BMS_HV_ERROR_WARNINGS"
+        },
+        "warnings": {
+            "type": "can",
+            "id": "0xAA",
+            "fb": "0x09",
+            "parser": "PARSE_BMS_HV_ERROR_WARNINGS"
+        }
+    },
+    "bms_lv": {
+        "values": {
+            "type": "can",
+            "id": "0xFF",
+            "parser": "PARSE_BMS_LV_VALUES"
+        }
+    },
+    "gps": {
+        "gga": {
+            "type": "gps",
+            "id": "GGA",
+            "parser": "PARSE_GGA"
+        },
+        "gll": {
+            "type": "gps",
+            "id": "GLL",
+            "parser": "PARSE_GLL"
+        },
+        "vtg": {
+            "type": "gps",
+            "id": "VTG",
+            "parser": "PARSE_VTG"
+        },
+        "rmc": {
+            "type": "gps",
+            "id": "RMC",
+            "parser": "PARSE_RMC"
+        }
+    },
+    "imu_old": {
+        "gyro": {
+            "type": "can",
+            "id": "0xC0",
+            "fb": "0x00",
+            "parser": "PARSE_IMU_OLD_ACCEL"
+        },
+        "accel": {
+            "type": "can",
+            "id": "0xC0",
+            "fb": "0x01",
+            "parser": "PARSE_IMU_OLD_GYRO"
+        }
+    },
+    "imu": {
+        "gyro": {
+            "type": "can",
+            "id": "0x4ED",
+            "parser": "PARSE_IMU"
+        },
+        "accel": {
+            "type": "can",
+            "id": "0x4EC",
+            "parser": "PARSE_IMU"
+        }
+    },
+    "front_wheels_encoders": {
+        "right": {
+            "speed": {
+                "type": "can",
+                "id": "0xD0",
+                "fb": "0x06",
+                "parser": "PARSE_FRONT_WHEELS_ENCODERS_SPEED"
+            },
+            "speed_rads": {
+                "type": "can",
+                "id": "0xD0",
+                "fb": "0x07",
+                "parser": "PARSE_FRONT_WHEELS_ENCODERS_SPEED_RADS"
+            },
+            "angle": {
+                "type": "can",
+                "id": "0xD0",
+                "fb": "0x15",
+                "parser": "PARSE_FRONT_WHEELS_ENCODERS_ANGLE"
+            }
+        },
+        "left": {
+            "speed": {
+                "type": "can",
+                "id": "0xD1",
+                "fb": "0x06",
+                "parser": "PARSE_FRONT_WHEELS_ENCODERS_SPEED"
+            },
+            "speed_rads": {
+                "type": "can",
+                "id": "0xD1",
+                "fb": "0x07",
+                "parser": "PARSE_FRONT_WHEELS_ENCODERS_SPEED_RADS"
+            },
+            "angle": {
+                "type": "can",
+                "id": "0xD1",
+                "fb": "0x15",
+                "parser": "PARSE_FRONT_WHEELS_ENCODERS_ANGLE"
+            }
+        }
+    },
+    "distance": {
+        "type": "can",
+        "id": "0xD0",
+        "fb": "0x08",
+        "parser": "PARSE_DISTANCE"
+    },
+    "pedals": {
+        "throttle": {
+            "type": "can",
+            "id": "0xB0",
+            "fb": "0x01",
+            "parser": "PARSE_PEDALS_THROTTLE"
+        },
+        "brake": {
+            "type": "can",
+            "id": "0xB0",
+            "fb": "0x02",
+            "parser": "PARSE_PEDALS_BRAKE"
+        }
+    },
+    "steering_wheel": {
+        "encoder": {
+            "type": "can",
+            "id": "0xC0",
+            "fb": "0x02",
+            "parser": "PARSE_STEERING_WHEEL_ENCODER"
+        },
+        "gears": {
+            "type": "can",
+            "id": "0xA0",
+            "fb": "0x01",
+            "parser": "STEERING_WHEEL_GEARS"
+        }
+    }
+}

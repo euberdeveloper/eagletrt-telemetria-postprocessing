@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { Message, parseCanLog, parseGpsLog } from '../../utils/parsers';
+import { Message, parseCanLog, parseGpsLog } from '@lib/utils/parsers';
 
 type TempTestResult = Record<string, any[]>;
 type TestResult = {

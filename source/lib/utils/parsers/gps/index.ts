@@ -1,11 +1,11 @@
 import {
     EagletrtPostProcessingInvalidGpsRowError,
     EagletrtPostProcessingInvalidGpsRowTimestampError
-} from '../../../errors';
+} from '@lib/errors';
+import { extractTimestamp } from '@lib/utils/timestamp';
 
 import { Message } from '..';
-import { extractTimestamp } from '../../timestamp';
-import MESSAGES from './helpers/messages';
+import MESSAGES from './messages/messages';
 
 function parseMessage(type: string, msg: string[]): Message | null {
     const message = MESSAGES.find(m => m.type === type) ?? null;

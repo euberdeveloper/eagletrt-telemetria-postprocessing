@@ -1,7 +1,8 @@
 #!/usr/bin/env node
+import 'module-alias/register';
 import * as yargs from 'yargs';
 
-import { processLogsForTest, processLogsToJson, processLogsToCsv } from '../lib';
+import { processLogsForTest, processLogsToJson, processLogsToCsv } from '@/lib';
 
 yargs
     .scriptName('eagletrt-process')

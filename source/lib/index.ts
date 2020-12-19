@@ -1,3 +1,5 @@
-export * from './modules/test';
-export * from './modules/csv';
-export * from './modules/json';
+import 'module-alias/register';
+
+export * from '@lib/modules/test';
+export * from '@lib/modules/csv';
+export * from '@lib/modules/json';

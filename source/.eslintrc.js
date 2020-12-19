@@ -34,8 +34,17 @@ module.exports = {
                 trailingUnderscore: 'allow',
             },
             {
+                selector: 'classProperty',
+                modifiers: ['static'],
+                format: ['camelCase', 'UPPER_CASE']
+            },
+            {
                 selector: 'objectLiteralProperty',
                 format: ['camelCase', 'snake_case'],
+            },
+            {
+                selector: 'objectLiteralMethod',
+                format: ['camelCase', 'snake_case', 'UPPER_CASE'],
             },
             {
                 selector: 'typeLike',

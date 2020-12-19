@@ -1,11 +1,12 @@
 import {
     EagletrtPostProcessingInvalidCanRowError,
     EagletrtPostProcessingInvalidCanRowTimestampError
-} from '../../../errors';
+} from '@lib/errors';
+
+import { extractTimestamp } from '@lib/utils/timestamp';
 
 import { Message } from '..';
-import { extractTimestamp } from '../../timestamp';
-import MESSAGES from './helpers/messages';
+import MESSAGES from './messages/messages';
 
 function parseMessage(id: number, fb: number, msg: number[]): Message | null {
     const message = MESSAGES.find(m => m.id === id && (!m.fb || m.fb === fb)) ?? null;

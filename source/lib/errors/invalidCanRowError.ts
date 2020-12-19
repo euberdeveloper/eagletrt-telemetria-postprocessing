@@ -1,7 +1,6 @@
 import { EagletrtPostProcessingError } from './postProcessingError';
 
 export class EagletrtPostProcessingInvalidCanRowError extends EagletrtPostProcessingError {
-
     protected static readonly DEFAULT_MESSAGE: string = 'Invalid can log row';
     protected readonly line: string | null;
 
@@ -10,5 +9,4 @@ export class EagletrtPostProcessingInvalidCanRowError extends EagletrtPostProces
         this.line = line ?? null;
         this.name = 'EagletrtPostProcessingInvalidCanRowError';
     }
-
 }
