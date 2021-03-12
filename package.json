@@ -1,6 +1,6 @@
 {
   "name": "@eagletrt/eagletrt-telemetria-postprocessing",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "The EagleTRT telemetry's post processor",
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
@@ -25,7 +25,7 @@
     "type": "git",
     "url": "git+https://github.com/eagletrt/eagletrt-telemetria-postprocessing.git"
   },
-  "author": "Nicola toscan",
+  "author": "Nicola Toscan",
   "contributors": [
     {
       "name": "Eugenio Berretta",
@@ -51,6 +51,7 @@
     "typescript": "^4.1.3"
   },
   "dependencies": {
+    "euberlog": "^2.0.9",
     "module-alias": "^2.2.2",
     "yargs": "^16.2.0"
   },
