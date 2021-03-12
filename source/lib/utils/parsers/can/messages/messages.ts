@@ -33,6 +33,8 @@ function getCanMessagesFromModel(model: any, keys: string[], messages: CanMessag
                     parser: PARSERS[md.parser]
                 });
             }
+
+            keys.pop();
         } else {
             const md: any = model[key];
             getCanMessagesFromModel(md, [...keys, key], messages);
