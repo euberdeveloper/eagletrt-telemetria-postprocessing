@@ -57,13 +57,13 @@
         "temperature": {
             "type": "can",
             "id": "0xAA",
-            "fb": "0x01",
+            "fb": "0x0A",
             "parser": "PARSE_BMS_HV_VOLTAGE"
         },
         "voltage": {
             "type": "can",
             "id": "0xAA",
-            "fb": "0x0a",
+            "fb": "0x01",
             "parser": "PARSE_BMS_HV_TEMPERATURE"
         },
         "current": {
