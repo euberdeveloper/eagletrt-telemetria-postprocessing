@@ -1,3 +1,5 @@
+import { Logger } from 'euberlog';
+
 import {
     EagletrtPostProcessingInvalidGpsRowError,
     EagletrtPostProcessingInvalidGpsRowTimestampError
@@ -6,6 +8,8 @@ import { extractTimestamp } from '@lib/utils/timestamp';
 
 import { Message } from '..';
 import MESSAGES from './messages/messages';
+
+const logger = new Logger();
 
 function parseMessage(type: string, msg: string[]): Message | null {
     const message = MESSAGES.find(m => m.type === type) ?? null;
@@ -18,7 +22,7 @@ function parseMessage(type: string, msg: string[]): Message | null {
         : null;
 }
 
-function parseLine(line: string, keepTimestamps: boolean, throwError: boolean): Message | null {
+function parseLine(line: string, index: number, keepTimestamps: boolean, throwError: boolean): Message | null {
     const pattern = /\$\w{2}(?<type>\w{3}),(?<body>.*)/;
     const patternResult = pattern.exec(line)?.groups;
 
@@ -38,9 +42,9 @@ function parseLine(line: string, keepTimestamps: boolean, throwError: boolean): 
             if (timestamp) {
                 message.timestamp = timestamp;
             } else {
-                console.log('warning timestapm', line);
+                logger.warning('Line without timestamp', { line, index });
                 if (throwError) {
-                    throw new EagletrtPostProcessingInvalidGpsRowTimestampError(undefined, line);
+                    throw new EagletrtPostProcessingInvalidGpsRowTimestampError(undefined, line, index);
                 }
                 return null;
             }
@@ -49,9 +53,9 @@ function parseLine(line: string, keepTimestamps: boolean, throwError: boolean): 
         return message;
     } else {
         if (!!line) {
-            console.log('warning', line);
+            logger.warning('Invalid line', { line, index });
             if (throwError) {
-                throw new EagletrtPostProcessingInvalidGpsRowError(undefined, line);
+                throw new EagletrtPostProcessingInvalidGpsRowError(undefined, line, index);
             }
         }
         return null;
@@ -62,13 +66,13 @@ export function parseGpsLog(text: string, keepTimestamps: boolean, throwError: b
     const lines = text.split('\n');
     const messages: Message[] = [];
 
-    for (const line of lines) {
-        const message = parseLine(line, keepTimestamps, throwError);
+    lines.forEach((line, index) => {
+        const message = parseLine(line, index, keepTimestamps, throwError);
 
         if (message) {
             messages.push(message);
         }
-    }
+    });
 
     return messages;
 }
