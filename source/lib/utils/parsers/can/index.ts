@@ -13,7 +13,7 @@ import MESSAGES from './messages/messages';
 const logger = new Logger();
 
 function parseMessage(id: number, fb: number, msg: number[]): Message | null {
-    const message = MESSAGES.find(m => m.id === id && (!m.fb === undefined || m.fb === fb)) ?? null;
+    const message = MESSAGES.find(m => m.id === id && (m.fb === undefined || m.fb === fb)) ?? null;
 
     return message
         ? {
