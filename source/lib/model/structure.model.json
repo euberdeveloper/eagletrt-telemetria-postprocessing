@@ -57,13 +57,13 @@
         "temperature": {
             "type": "can",
             "id": "0xAA",
-            "fb": "0x01",
+            "fb": "0x0A",
             "parser": "PARSE_BMS_HV_VOLTAGE"
         },
         "voltage": {
             "type": "can",
             "id": "0xAA",
-            "fb": "0x0a",
+            "fb": "0x01",
             "parser": "PARSE_BMS_HV_TEMPERATURE"
         },
         "current": {
@@ -118,25 +118,25 @@
         "gyro": {
             "type": "can",
             "id": "0xC0",
-            "fb": "0x00",
+            "fb": "0x01",
             "parser": "PARSE_IMU_OLD_ACCEL"
         },
         "accel": {
             "type": "can",
             "id": "0xC0",
-            "fb": "0x01",
+            "fb": "0x00",
             "parser": "PARSE_IMU_OLD_GYRO"
         }
     },
     "imu": {
         "gyro": {
             "type": "can",
-            "id": "0x4ED",
+            "id": "0x4EC",
             "parser": "PARSE_IMU"
         },
         "accel": {
             "type": "can",
-            "id": "0x4EC",
+            "id": "0x4ED",
             "parser": "PARSE_IMU"
         }
     },

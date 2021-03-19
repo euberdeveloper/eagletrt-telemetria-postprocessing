@@ -22,7 +22,7 @@ export const PARSERS: Record<string, CanMessageParser> = {
     }),
     PARSE_BMS_HV_CURRENT: msg => ({
         current: ((msg[1] << 8) + msg[2]) / 10,
-        pow: ((msg[3] << 8) + msg[4]) / 10
+        pow: (msg[3] << 8) + msg[4]
     }),
     PARSE_BMS_HV_ERROR_WARNINGS: msg => ({
         fault_id: msg[1],
