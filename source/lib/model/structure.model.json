@@ -58,13 +58,13 @@
             "type": "can",
             "id": "0xAA",
             "fb": "0x0A",
-            "parser": "PARSE_BMS_HV_VOLTAGE"
+            "parser": "PARSE_BMS_HV_TEMPERATURE"
         },
         "voltage": {
             "type": "can",
             "id": "0xAA",
             "fb": "0x01",
-            "parser": "PARSE_BMS_HV_TEMPERATURE"
+            "parser": "PARSE_BMS_HV_VOLTAGE"
         },
         "current": {
             "type": "can",
@@ -119,13 +119,13 @@
             "type": "can",
             "id": "0xC0",
             "fb": "0x01",
-            "parser": "PARSE_IMU_OLD_ACCEL"
+            "parser": "PARSE_IMU_OLD_GYRO"
         },
         "accel": {
             "type": "can",
             "id": "0xC0",
             "fb": "0x00",
-            "parser": "PARSE_IMU_OLD_GYRO"
+            "parser": "PARSE_IMU_OLD_ACCEL"
         }
     },
     "imu": {

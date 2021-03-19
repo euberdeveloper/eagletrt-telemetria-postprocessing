@@ -39,18 +39,18 @@ export const PARSERS: Record<string, CanMessageParser> = {
     PARSE_IMU_OLD_ACCEL: msg => {
         const scale = msg[7];
         return {
-            x: (msg[1] << (8 + msg[2])) / 100 - scale,
-            y: (msg[3] << (8 + msg[4])) / 100 - scale,
-            z: (msg[5] << (8 + msg[6])) / 100 - scale,
+            x: ((msg[1] << 8) + msg[2]) / 100 - scale,
+            y: ((msg[3] << 8) + msg[4]) / 100 - scale,
+            z: ((msg[5] << 8) + msg[6]) / 100 - scale,
             scale: scale
         };
     },
     PARSE_IMU_OLD_GYRO: msg => {
-        const scale = msg[7];
+        const scale = msg[7] * 10;
         return {
-            x: (msg[1] << (8 + msg[2])) / 10 - scale,
-            y: (msg[3] << (8 + msg[4])) / 10 - scale,
-            z: (msg[5] << (8 + msg[6])) / 10 - scale,
+            x: ((msg[1] << 8) + msg[2]) / 10 - scale,
+            y: ((msg[3] << 8) + msg[4]) / 10 - scale,
+            z: ((msg[5] << 8) + msg[6]) / 10 - scale,
             scale: scale
         };
     },
