@@ -16,9 +16,9 @@ function parseMessage(type: string, msg: string[]): Message | null {
 
     return message
         ? {
-            message: message.message,
-            value: message.parser(msg)
-        }
+              message: message.message,
+              value: message.parser(msg)
+          }
         : null;
 }
 
