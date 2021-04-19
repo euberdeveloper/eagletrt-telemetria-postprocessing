@@ -1,9 +1,9 @@
-name: Lint
+name: Test
 on: [push]
 
 jobs:
   test:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     
     strategy:
       matrix:
@@ -22,5 +22,5 @@ jobs:
       - name: Transpile code
         run: npm run transpile
         
-      - name: Lint code
-        run: npm run lint
+      - name: Bundle code
+        run: npm run bundle
