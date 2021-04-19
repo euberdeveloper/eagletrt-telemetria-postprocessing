@@ -37,7 +37,7 @@ export function processLogsForTest(
         let text = fs.readFileSync(canLogPath, 'utf-8');
         let messages = parseCanLog(text, false, throwError);
         text = '';
-        messages.forEach(message => addMessage(tempResult, message));
+        for (const message of messages) addMessage(tempResult, message);
         messages = [];
     }
 
@@ -47,7 +47,7 @@ export function processLogsForTest(
         let text = fs.readFileSync(gpsLogPath, 'utf-8');
         let messages = parseGpsLog(text, false, throwError);
         text = '';
-        messages.forEach(message => addMessage(tempResult, message));
+        for (const message of messages) addMessage(tempResult, message);
         messages = [];
     }
 

@@ -34,7 +34,9 @@ export function processLogsToJson(
         let text = fs.readFileSync(canLogPath, 'utf-8');
         let messages = parseCanLog(text, true, throwError);
         text = '';
-        messages.forEach(message => addMessage(result, message));
+        for (const message of messages) {
+            addMessage(result, message);
+        }
         messages = [];
     }
 
@@ -44,7 +46,9 @@ export function processLogsToJson(
         let text = fs.readFileSync(gpsLogPath, 'utf-8');
         let messages = parseGpsLog(text, true, throwError);
         text = '';
-        messages.forEach(message => addMessage(result, message));
+        for (const message of messages) {
+            addMessage(result, message);
+        }
         messages = [];
     }
 

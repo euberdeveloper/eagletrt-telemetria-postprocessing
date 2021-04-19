@@ -16,9 +16,9 @@ function parseMessage(type: string, msg: string[]): Message | null {
 
     return message
         ? {
-              message: message.message,
-              value: message.parser(msg)
-          }
+            message: message.message,
+            value: message.parser(msg)
+        }
         : null;
 }
 
@@ -66,13 +66,13 @@ export function parseGpsLog(text: string, keepTimestamps: boolean, throwError: b
     const lines = text.split('\n');
     const messages: Message[] = [];
 
-    lines.forEach((line, index) => {
+    for (const [index, line] of lines.entries()) {
         const message = parseLine(line, index, keepTimestamps, throwError);
 
         if (message) {
             messages.push(message);
         }
-    });
+    }
 
     return messages;
 }

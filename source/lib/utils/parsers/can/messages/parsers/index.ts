@@ -5,15 +5,15 @@ export type CanMessageParser = (msg: number[]) => any;
 export const PARSERS: Record<string, CanMessageParser> = {
     /* INVERTERS */
     PARSE_INVERTERS_SPEED: msg => zweiComplement((msg[2] << 8) + msg[1]),
-    PARSE_INVERTERS_TEMPERATURE_IGBT: msg => ((msg[2] << 8) + msg[1] - 15797) / 112.1182,
+    PARSE_INVERTERS_TEMPERATURE_IGBT: msg => ((msg[2] << 8) + msg[1] - 15_797) / 112.1182,
     PARSE_INVERTERS_TEMPERATURE_MOTORS: msg => ((msg[2] << 8) + msg[1] - 9393.9) / 55.1,
     PARSE_INVERTERS_TORQUE: msg => ((msg[2] << 8) + msg[1] - 9393.9) / 55.1,
 
     /* BMS_HV */
     PARSE_BMS_HV_VOLTAGE: msg => ({
-        total: ((msg[1] << 16) + (msg[2] << 8) + msg[3]) / 10000,
-        max: ((msg[4] << 8) + msg[5]) / 10000,
-        min: ((msg[6] << 8) + msg[7]) / 10000
+        total: ((msg[1] << 16) + (msg[2] << 8) + msg[3]) / 10_000,
+        max: ((msg[4] << 8) + msg[5]) / 10_000,
+        min: ((msg[6] << 8) + msg[7]) / 10_000
     }),
     PARSE_BMS_HV_TEMPERATURE: msg => ({
         average: ((msg[1] << 8) + msg[2]) / 100,
@@ -79,7 +79,7 @@ export const PARSERS: Record<string, CanMessageParser> = {
         error_flag: msg[6]
     }),
     PARSE_FRONT_WHEELS_ENCODERS_SPEED_RADS: msg =>
-        ((msg[1] << 16) + (msg[2] << 8) + msg[3]) / (msg[7] === 1 ? -10000 : 10000),
+        ((msg[1] << 16) + (msg[2] << 8) + msg[3]) / (msg[7] === 1 ? -10_000 : 10_000),
     PARSE_FRONT_WHEELS_ENCODERS_ANGLE: msg => ({
         angle_0: ((msg[1] << 8) + msg[2]) / 100,
         angle_1: ((msg[3] << 8) + msg[4]) / 100,

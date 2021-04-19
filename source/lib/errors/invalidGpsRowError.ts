@@ -5,7 +5,7 @@ export class EagletrtPostProcessingInvalidGpsRowError extends EagletrtPostProces
     protected readonly line: string | null;
     protected readonly index: number | null;
 
-    public constructor(message?: string, line?: string, index?: number) {
+    constructor(message?: string, line?: string, index?: number) {
         super(message ?? EagletrtPostProcessingInvalidGpsRowError.DEFAULT_MESSAGE);
         this.line = line ?? null;
         this.index = index ?? null;

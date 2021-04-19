@@ -1,8 +1,8 @@
 export class EagletrtPostProcessingError extends Error {
     public name: string;
 
-    public constructor(message?: string) {
+    constructor(message?: string) {
         super(message);
-        this.name = 'EagletrtPostProcessing';
+        this.name = 'EagletrtPostProcessingError';
     }
 }

@@ -36,15 +36,15 @@ function getMsg(body: string): number[] {
             return acc;
         }, [])
         .map(couple => couple.join(''))
-        .map(couple => parseInt(couple, 16));
+        .map(couple => Number.parseInt(couple, 16));
 }
 
 function parseLine(line: string, index: number, keepTimestamps: boolean, throwError: boolean): Message | null {
-    const pattern = /(?<id>[a-zA-Z0-9]{3})#(?<body>[a-zA-Z0-9]{2,16})/;
+    const pattern = /(?<id>[\dA-Za-z]{3})#(?<body>[\dA-Za-z]{2,16})/;
     const patternResult = pattern.exec(line)?.groups;
 
     if (patternResult) {
-        const id = parseInt(patternResult.id, 16);
+        const id = Number.parseInt(patternResult.id, 16);
         const body = patternResult.body;
         const msg = getMsg(body);
         const message = parseMessage(id, msg[0], msg);
@@ -79,13 +79,13 @@ export function parseCanLog(text: string, keepTimestamps: boolean, throwError: b
     const lines = text.split('\n');
     const messages: Message[] = [];
 
-    lines.forEach((line, index) => {
+    for (const [index, line] of lines.entries()) {
         const message = parseLine(line, index, keepTimestamps, throwError);
 
         if (message) {
             messages.push(message);
         }
-    });
+    }
 
     return messages;
 }
