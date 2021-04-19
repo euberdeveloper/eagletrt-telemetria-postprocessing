@@ -1,6 +1,10 @@
 #!/usr/bin/env node
-import 'module-alias/register';
 import * as yargs from 'yargs';
+
+if (!process.env.IS_WEBPACK) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    require('module-alias/register');
+}
 
 import { processLogsForTest, processLogsToJson, processLogsToCsv } from '@/lib';
 
