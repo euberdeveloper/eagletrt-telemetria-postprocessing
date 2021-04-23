@@ -61,7 +61,8 @@ const binConfig = {
         extensions: ['.ts', '.js']
     },
     plugins: [
-        new webpack.BannerPlugin({ banner: '#!/usr/bin/env node', raw: true })
+        new webpack.BannerPlugin({ banner: '#!/usr/bin/env node', raw: true }),
+        new webpack.EnvironmentPlugin(['IS_WEBPACK'])
     ],
     module: {
         rules: [
