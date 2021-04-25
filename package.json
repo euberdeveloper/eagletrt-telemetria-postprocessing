@@ -1,6 +1,6 @@
 {
-  "name": "@eagletrt/eagletrt-telemetria-postprocessing",
-  "version": "3.2.4",
+  "name": "@eagletrt/telemetria-postprocessing",
+  "version": "3.2.5",
   "description": "The EagleTRT telemetry's post processor",
   "main": "bundled/lib/index.js",
   "types": "bundled/lib/index.d.ts",
@@ -24,8 +24,8 @@
     "docs:html": "typedoc",
     "docs:html-dev": "typedoc --options typedoc.dev.js",
     "docs": "npm run docs:html && npm run docs:html-dev",
-    "commit": "git-cz",
-    "commit:sign": "git-cz -S",
+    "commit": "cz",
+    "commit:sign": "cz -S",
     "prepublishOnly": "npm run bundle"
   },
   "repository": {
@@ -53,6 +53,7 @@
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "commitizen": "^4.2.3",
+    "cz-conventional-changelog": "^3.2.0",
     "dts-bundle-webpack": "^1.0.2",
     "eslint": "^7.24.0",
     "eslint-config-prettier": "^8.2.0",
@@ -79,5 +80,10 @@
     "@": "dist",
     "@lib": "dist/lib",
     "@bin": "dist/bin"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
