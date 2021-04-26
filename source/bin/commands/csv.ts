@@ -1,6 +1,6 @@
-import { processLogsToCsv } from '@/lib';
-import { Command } from '@bin/types';
+import { processLogsToCsv } from '@lib';
 import { options } from '@bin/utils/options';
+import { Command } from '@bin/commands/types';
 
 export const command: Command = {
     command: 'csv',
