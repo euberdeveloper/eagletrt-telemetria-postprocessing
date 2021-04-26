@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
 const DtsBundleWebpack = require('dts-bundle-webpack');
 
-
 const libConfig = {
     target: 'node',
     mode: 'production',
@@ -49,6 +48,58 @@ const libConfig = {
     }
 };
 
+const commandsConfig = {
+    target: 'node',
+    mode: 'production',
+    // devtool: 'source-map',
+    entry: {
+        index: path.join(__dirname, 'source', 'bin', 'commands', 'index.ts')
+    },
+    resolve: {
+        extensions: ['.ts', '.js']
+    },
+    module: {
+        rules: [
+            {
+                test: /\.ts$/,
+                use: [
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                          compiler: 'ttypescript'
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    plugins: [
+        new DtsBundleWebpack({
+            name: '@eagletrt/telemetria-postprocessing/bundled/bin/commands',
+            main: 'dist/bin/commands/index.d.ts',
+            out: '../../../bundled/bin/commands/index.d.ts'
+        }),
+        new webpack.EnvironmentPlugin(['IS_WEBPACK'])
+    ],
+    externals: [{
+        // @/lib
+        '../../lib/index': {
+            amd: './commands/index.js',
+            root: '@eagletrt/telemetria-postprocessing',
+            commonjs: './commands/index.js',
+            commonjs2: './commands/index.js'
+        }
+    }, nodeExternals()],
+    output: {
+        path: path.resolve(__dirname, 'bundled', 'bin', 'commands'),
+        filename: 'index.js',
+        library: '@eagletrt/telemetria-postprocessing/bundled/bin/commands',
+        libraryTarget: 'umd',
+        globalObject: 'this',
+        umdNamedDefine: true,
+    }
+};
+
 const binConfig = {
     target: 'node',
     mode: 'production',
@@ -56,16 +107,10 @@ const binConfig = {
     entry: {
         index: path.join(__dirname, 'source', 'bin', 'index.ts'),
     },
-
     resolve: {
         extensions: ['.ts', '.js']
     },
     plugins: [
-        new DtsBundleWebpack({
-            name: '@eagletrt/telemetria-postprocessing/bundled/bin',
-            main: 'dist/bin/index.d.ts',
-            out: '../../bundled/bin/index.d.ts'
-        }),
         new webpack.BannerPlugin({ banner: '#!/usr/bin/env node', raw: true }),
         new webpack.EnvironmentPlugin(['IS_WEBPACK'])
     ],
@@ -88,11 +133,12 @@ const binConfig = {
         ]
     },
     externals: [{
-        '@lib': {
-            amd: '../lib/index.js',
-            root: '@eagletrt/telemetria-postprocessing',
-            commonjs: '../lib/index.js',
-            commonjs2: '../lib/index.js'
+        // @/bin/commands
+        './commands/index': {
+            amd: './commands/index.js',
+            root: '@eagletrt/telemetria-postprocessing/bundled/bin/commands',
+            commonjs: './commands/index.js',
+            commonjs2: './commands/index.js'
         }
     }, nodeExternals()],
     output: {
@@ -107,5 +153,6 @@ const binConfig = {
 
 module.exports = [
     libConfig,
+    commandsConfig,
     binConfig
 ];
