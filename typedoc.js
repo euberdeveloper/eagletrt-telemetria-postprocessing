@@ -2,7 +2,7 @@ module.exports = {
     entryPoints: [
         './source/index.ts'
     ],
-    name: '@eagletrt/eagletrt-telemetria-postprocessing',
+    name: '@eagletrt/telemetria-postprocessing',
     excludeExternals: true,
     includeVersion: true,
     tsconfig: 'source/tsconfig.json',
