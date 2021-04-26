@@ -86,8 +86,8 @@ const commandsConfig = {
         '../../lib/index': {
             amd: '../../lib/index.js',
             root: '@eagletrt/telemetria-postprocessing',
-            commonjs: '../../lib/commands/index.js',
-            commonjs2: '../../lib/commands/index.js'
+            commonjs: '../../lib/index.js',
+            commonjs2: '../../lib/index.js'
         }
     }, nodeExternals()],
     output: {
