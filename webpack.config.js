@@ -82,12 +82,12 @@ const commandsConfig = {
         new webpack.EnvironmentPlugin(['IS_WEBPACK'])
     ],
     externals: [{
-        // @/lib
+        // @lib
         '../../lib/index': {
-            amd: './commands/index.js',
+            amd: '../../lib/index.js',
             root: '@eagletrt/telemetria-postprocessing',
-            commonjs: './commands/index.js',
-            commonjs2: './commands/index.js'
+            commonjs: '../../lib/commands/index.js',
+            commonjs2: '../../lib/commands/index.js'
         }
     }, nodeExternals()],
     output: {
