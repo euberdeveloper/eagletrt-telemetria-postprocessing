@@ -42,5 +42,6 @@ yargs
         }
     )
     .demandCommand(1, 'You must enter a command')
+    .strict()
     .epilogue('For more information, find our manual at https://github.com/eagletrt/telemetria-postprocessing#readme')
     .argv;
