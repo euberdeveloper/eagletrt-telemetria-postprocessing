@@ -1,6 +1,6 @@
 {
   "name": "@eagletrt/telemetria-postprocessing",
-  "version": "3.2.5",
+  "version": "3.3.0",
   "description": "The EagleTRT telemetry's post processor",
   "main": "bundled/lib/index.js",
   "types": "bundled/lib/index.d.ts",
@@ -30,7 +30,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eagletrt/eagletrt-telemetria-postprocessing.git"
+    "url": "git+https://github.com/eagletrt/telemetria-postprocessing.git"
   },
   "author": "Nicola Toscan",
   "contributors": [
@@ -42,9 +42,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/eagletrt/eagletrt-telemetria-postprocessing/issues"
+    "url": "https://github.com/eagletrt/telemetria-postprocessing/issues"
   },
-  "homepage": "https://github.com/eagletrt/eagletrt-telemetria-postprocessing#readme",
+  "homepage": "https://github.com/eagletrt/telemetria-postprocessing#readme",
   "devDependencies": {
     "@euberdeveloper/eslint-plugin": "^1.1.3",
     "@types/module-alias": "^2.0.0",

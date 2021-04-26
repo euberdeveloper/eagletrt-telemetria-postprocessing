@@ -32,7 +32,7 @@ const libConfig = {
     },
     plugins: [
         new DtsBundleWebpack({
-            name: '@eagletrt/eagletrt-telemetria-postprocessing',
+            name: '@eagletrt/telemetria-postprocessing',
             main: 'dist/lib/index.d.ts',
             out: '../../bundled/lib/index.d.ts'
         }),
@@ -42,7 +42,7 @@ const libConfig = {
     output: {
         path: path.resolve(__dirname, 'bundled', 'lib'),
         filename: 'index.js',
-        library: '@eagletrt/eagletrt-telemetria-postprocessing',
+        library: '@eagletrt/telemetria-postprocessing',
         libraryTarget: 'umd',
         globalObject: 'this',
         umdNamedDefine: true,
@@ -61,6 +61,11 @@ const binConfig = {
         extensions: ['.ts', '.js']
     },
     plugins: [
+        new DtsBundleWebpack({
+            name: '@eagletrt/telemetria-postprocessing/bundled/bin',
+            main: 'dist/bin/index.d.ts',
+            out: '../../bundled/bin/index.d.ts'
+        }),
         new webpack.BannerPlugin({ banner: '#!/usr/bin/env node', raw: true }),
         new webpack.EnvironmentPlugin(['IS_WEBPACK'])
     ],
@@ -85,7 +90,7 @@ const binConfig = {
     externals: [{
         '@lib': {
             amd: '../lib/index.js',
-            root: '@eagletrt/eagletrt-telemetria-postprocessing',
+            root: '@eagletrt/telemetria-postprocessing',
             commonjs: '../lib/index.js',
             commonjs2: '../lib/index.js'
         }
@@ -93,7 +98,7 @@ const binConfig = {
     output: {
         path: path.resolve(__dirname, 'bundled', 'bin'),
         filename: 'index.js',
-        library: '@eagletrt/eagletrt-telemetria-postprocessing',
+        library: '@eagletrt/telemetria-postprocessing/bundled/bin',
         libraryTarget: 'umd',
         globalObject: 'this',
         umdNamedDefine: true,
