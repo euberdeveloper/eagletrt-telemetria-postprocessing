@@ -31,6 +31,8 @@ function getGpsMessagesFromModel(model: any, keys: string[], messages: GpsMessag
                     parser: PARSERS[md.parser]
                 });
             }
+
+            keys.pop();
         } else {
             const md: any = model[key];
             getGpsMessagesFromModel(md, [...keys, key], messages);
