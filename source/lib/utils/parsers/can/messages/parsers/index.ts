@@ -97,5 +97,31 @@ export const PARSERS: Record<string, CanMessageParser> = {
         control: msg[1],
         cooling: msg[2],
         map: msg[3]
+    }),
+
+    ENCODERS_AVERAGE_SPEED: msg => ({
+        left: (msg[0] << 16) + (msg[1] << 8) + msg[2],
+        right: (msg[3] << 16) + (msg[4] << 8) + msg[5]
+    }),
+
+    ENCODERS_ROTATION_AND_KM: msg => ({
+        rotations: ((msg[0] << 16) + (msg[1] << 8) + msg[2]) * msg[6] == 1 ? 1 : -1,
+        km: ((msg[3] << 16) + (msg[4] << 8) + msg[5]) * msg[7] == 1 ? 1 : -1
+    }),
+
+    ENCODERS_AVERAGE_SPEED2: msg => {
+        const speedDiveder = (msg[7] / 2) * 3.6 * 1000;
+        const speedSign = msg[3] === 1 ? 1 : -1;
+        return {
+            speed_kmh: (((msg[0] << 16) + (msg[1] << 8) + msg[3]) / speedDiveder) * speedSign
+        };
+    },
+
+    ENCODERS_ANGLES: msg => ({
+        la: ((msg[0] << 8) + msg[1]) / 100,
+        ra: ((msg[2] << 8) + msg[3]) / 100,
+        da: ((msg[4] << 8) + msg[5]) / 100,
+        frequencyLeft: msg[6],
+        frequencyRight: msg[6]
     })
 };
