@@ -75,8 +75,8 @@ export const PARSERS: Record<string, CanMessageParser> = {
 
     /* FRONT_WHEELS_ENCODERS */
     PARSE_FRONT_WHEELS_ENCODERS_SPEED_RADS: msg => ({
-        left: (msg[0] << 16) + (msg[1] << 8) + msg[2] * msg[6] == 1 ? 1 : -1,
-        right: (msg[3] << 16) + (msg[4] << 8) + msg[5] * msg[7] == 1 ? 1 : -1
+        left: (msg[0] << 16) + (msg[1] << 8) + msg[2] * (msg[6] == 1 ? 1 : -1),
+        right: (msg[3] << 16) + (msg[4] << 8) + msg[5] * (msg[7] == 1 ? 1 : -1)
     }),
     PARSE_FRONT_WHEELS_ENCODERS_ROTATION_AND_KM: msg => ({
         rotations: (msg[0] << 16) + (msg[1] << 8) + msg[2],
