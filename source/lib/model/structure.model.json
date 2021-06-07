@@ -148,7 +148,7 @@
         },
         "rotation_and_km": {
             "type": "can",
-            "id": "0xD2",
+            "id": "0xD1",
             "parser": "PARSE_FRONT_WHEELS_ENCODERS_ROTATION_AND_KM"
         }
     },
