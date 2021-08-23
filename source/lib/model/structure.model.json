@@ -13,13 +13,13 @@
                 "fb": "0x4A",
                 "parser": "PARSE_INVERTERS_TEMPERATURE_IGBT"
             },
-            "temperature_motors":  {
+            "temperature_motors": {
                 "type": "can",
                 "id": "0x181",
                 "fb": "0x49",
                 "parser": "PARSE_INVERTERS_TEMPERATURE_MOTORS"
             },
-            "torque":  {
+            "torque": {
                 "type": "can",
                 "id": "0x181",
                 "fb": "0xA0",
@@ -39,13 +39,13 @@
                 "fb": "0x4A",
                 "parser": "PARSE_INVERTERS_TEMPERATURE_IGBT"
             },
-            "temperature_motors":  {
+            "temperature_motors": {
                 "type": "can",
                 "id": "0x182",
                 "fb": "0x49",
                 "parser": "PARSE_INVERTERS_TEMPERATURE_MOTORS"
             },
-            "torque":  {
+            "torque": {
                 "type": "can",
                 "id": "0x182",
                 "fb": "0xA0",
@@ -141,52 +141,16 @@
         }
     },
     "front_wheels_encoders": {
-        "right": {
-            "speed": {
-                "type": "can",
-                "id": "0xD0",
-                "fb": "0x06",
-                "parser": "PARSE_FRONT_WHEELS_ENCODERS_SPEED"
-            },
-            "speed_rads": {
-                "type": "can",
-                "id": "0xD0",
-                "fb": "0x07",
-                "parser": "PARSE_FRONT_WHEELS_ENCODERS_SPEED_RADS"
-            },
-            "angle": {
-                "type": "can",
-                "id": "0xD0",
-                "fb": "0x15",
-                "parser": "PARSE_FRONT_WHEELS_ENCODERS_ANGLE"
-            }
+        "speed_rads": {
+            "type": "can",
+            "id": "0xD0",
+            "parser": "PARSE_FRONT_WHEELS_ENCODERS_SPEED_RADS"
         },
-        "left": {
-            "speed": {
-                "type": "can",
-                "id": "0xD1",
-                "fb": "0x06",
-                "parser": "PARSE_FRONT_WHEELS_ENCODERS_SPEED"
-            },
-            "speed_rads": {
-                "type": "can",
-                "id": "0xD1",
-                "fb": "0x07",
-                "parser": "PARSE_FRONT_WHEELS_ENCODERS_SPEED_RADS"
-            },
-            "angle": {
-                "type": "can",
-                "id": "0xD1",
-                "fb": "0x15",
-                "parser": "PARSE_FRONT_WHEELS_ENCODERS_ANGLE"
-            }
+        "rotation_and_km": {
+            "type": "can",
+            "id": "0xD1",
+            "parser": "PARSE_FRONT_WHEELS_ENCODERS_ROTATION_AND_KM"
         }
-    },
-    "distance": {
-        "type": "can",
-        "id": "0xD0",
-        "fb": "0x08",
-        "parser": "PARSE_DISTANCE"
     },
     "pedals": {
         "throttle": {
