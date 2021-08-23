@@ -1,6 +1,6 @@
 {
   "name": "@eagletrt/telemetria-postprocessing",
-  "version": "3.4.5",
+  "version": "3.4.6",
   "description": "The EagleTRT telemetry's post processor",
   "main": "bundled/lib/index.js",
   "types": "bundled/lib/index.d.ts",
