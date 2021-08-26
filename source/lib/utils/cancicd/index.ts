@@ -11,8 +11,9 @@ function getMessage(lambda: any, message: Message, id: number): string {
     const strPayload = payload
         .toString('hex')
         .split(',')
-        .map(el => +el.toString(16))
-        .join('');
+        .map(el => (+el).toString(16))
+        .join('')
+        .toUpperCase();
 
     const timestamp = message.timestamp as number;
     const seconds = Math.floor(timestamp / 1000);
