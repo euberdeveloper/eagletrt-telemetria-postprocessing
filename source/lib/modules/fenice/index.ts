@@ -3,8 +3,14 @@ import * as path from 'path';
 import { parseCanLog } from '@lib/utils/parsers';
 import { convertMessage } from '@lib/utils/cancicd';
 
-export function processLogsToFenice(canLogPath: string, outputPath = 'result', throwError = false): void {
-    let result: string[] = [];
+export function processLogsToFenice(
+    canLogPath: string,
+    outputPathPrimary = 'result_primary',
+    outputPathSecondary = 'result_secondary',
+    throwError = false
+): void {
+    let resultPrimary: string[] = [];
+    let resultSecondary: string[] = [];
 
     canLogPath = path.resolve(canLogPath);
 
@@ -12,17 +18,26 @@ export function processLogsToFenice(canLogPath: string, outputPath = 'result', t
     let messages = parseCanLog(text, true, throwError);
     text = '';
     for (const message of messages) {
-        const res = convertMessage(message);
-        if (res) {
-            result.push(res);
+        const [resPrimary, resSecondary] = convertMessage(message);
+        if (resPrimary) {
+            resultPrimary.push(resPrimary);
+        }
+        if (resSecondary) {
+            resultSecondary.push(resSecondary);
         }
     }
 
     messages = [];
 
-    const resultText = result.join('\n');
-    result = [];
+    const resultPrimaryText = resultPrimary.join('\n');
+    resultPrimary = [];
 
-    outputPath = path.resolve(`${outputPath}.log`);
-    fs.writeFileSync(outputPath, resultText);
+    const resultSecondaryText = resultSecondary.join('\n');
+    resultSecondary = [];
+
+    outputPathPrimary = path.resolve(`${outputPathPrimary}.log`);
+    outputPathSecondary = path.resolve(`${outputPathSecondary}.log`);
+
+    fs.writeFileSync(outputPathPrimary, resultPrimaryText);
+    fs.writeFileSync(outputPathSecondary, resultSecondaryText);
 }

@@ -25,122 +25,143 @@ function getMessage(lambda: any, message: Message, id: number): string {
     return `(${strTimestamp}) can0  ${strId}#${strPayload}`;
 }
 
-export function convertMessage(message: Message): string | undefined {
+export function convertMessage(message: Message): [string | undefined, string | undefined] {
+    let value: string | undefined;
+
     switch (message.message) {
         case 'inverters.right.speed':
-            return getMessage(
+            value = getMessage(
                 primary.serializePrimaryInverterRightSpeed,
                 message,
                 primaryIds.topics.TLM.messages.INVERTER_RIGHT_SPEED.id
             );
+            return [value, undefined];
 
         case 'inverters.right.temperature_igbt':
-            return getMessage(
+            value = getMessage(
                 primary.serializePrimaryInverterRightTemperatureIgbt,
                 message,
                 primaryIds.topics.TLM.messages.INVERTER_RIGHT_TEMPERATURE_IGBT.id
             );
+            return [value, undefined];
 
         case 'inverters.right.temperature_motors':
-            return getMessage(
+            value = getMessage(
                 primary.serializePrimaryInverterRightTemperatureMotors,
                 message,
                 primaryIds.topics.TLM.messages.INVERTER_RIGHT_TEMPERATURE_MOTORS.id
             );
+            return [value, undefined];
 
         case 'inverters.right.torque':
-            return getMessage(
+            value = getMessage(
                 primary.serializePrimaryInverterRightTorque,
                 message,
                 primaryIds.topics.TLM.messages.INVERTER_RIGHT_TORQUE.id
             );
+            return [value, undefined];
 
         case 'inverters.left.speed':
-            return getMessage(
+            value = getMessage(
                 primary.serializePrimaryInverterLeftSpeed,
                 message,
                 primaryIds.topics.TLM.messages.INVERTER_LEFT_SPEED.id
             );
+            return [value, undefined];
 
         case 'inverters.left.temperature_igbt':
-            return getMessage(
+            value = getMessage(
                 primary.serializePrimaryInverterLeftTemperatureIgbt,
                 message,
                 primaryIds.topics.TLM.messages.INVERTER_LEFT_TEMPERATURE_IGBT.id
             );
+            return [value, undefined];
 
         case 'inverters.left.temperature_motors':
-            return getMessage(
+            value = getMessage(
                 primary.serializePrimaryInverterLeftTemperatureMotors,
                 message,
                 primaryIds.topics.TLM.messages.INVERTER_LEFT_TEMPERATURE_MOTORS.id
             );
+            return [value, undefined];
 
         case 'inverters.left.torque':
-            return getMessage(
+            value = getMessage(
                 primary.serializePrimaryInverterLeftTorque,
                 message,
                 primaryIds.topics.TLM.messages.INVERTER_LEFT_TORQUE.id
             );
+            return [value, undefined];
 
         case 'bms_hv.temperature':
-            return getMessage(
+            value = getMessage(
                 secondary.serializeSecondaryBmsHvTemperature,
                 message,
                 secondaryIds.topics.TLM.messages.BMS_HV_TEMPERATURE.id
             );
+            return [undefined, value];
         case 'bms_hv.voltage':
-            return getMessage(
+            value = getMessage(
                 secondary.serializeSecondaryBmsHvVoltage,
                 message,
                 secondaryIds.topics.TLM.messages.BMS_HV_VOLTAGE.id
             );
+            return [undefined, value];
         case 'bms_hv.current':
-            return getMessage(
+            value = getMessage(
                 secondary.serializeSecondaryBmsHvCurrent,
                 message,
                 secondaryIds.topics.TLM.messages.BMS_HV_CURRENT.id
             );
+            return [undefined, value];
 
         case 'imu.gyro':
-            return getMessage(primary.serializePrimaryImuGyro, message, primaryIds.topics.TLM.messages.IMU_GYRO.id);
+            value = getMessage(primary.serializePrimaryImuGyro, message, primaryIds.topics.TLM.messages.IMU_GYRO.id);
+            return [value, undefined];
 
         case 'imu.accel':
-            return getMessage(primary.serializePrimaryImuAccel, message, primaryIds.topics.TLM.messages.IMU_ACCEL.id);
+            value = getMessage(primary.serializePrimaryImuAccel, message, primaryIds.topics.TLM.messages.IMU_ACCEL.id);
+            return [value, undefined];
 
         case 'pedals.throttle':
-            return getMessage(
+            value = getMessage(
                 primary.serializePrimaryPedalsThrottle,
                 message,
                 primaryIds.topics.TLM.messages.PEDALS_THROTTLE.id
             );
+            return [value, undefined];
 
         case 'pedals.brake':
-            return getMessage(
+            value = getMessage(
                 primary.serializePrimaryPedalsBrake,
                 message,
                 primaryIds.topics.TLM.messages.PEDALS_BRAKE.id
             );
+            return [value, undefined];
 
         case 'steering_wheel.encoder':
-            return getMessage(
+            value = getMessage(
                 primary.serializePrimarySteeringWheelEncoder,
                 message,
                 primaryIds.topics.TLM.messages.STEERING_WHEEL_ENCODER.id
             );
+            return [value, undefined];
 
         case 'front_wheels_encoder.speed_rads':
-            return getMessage(
+            value = getMessage(
                 primary.serializePrimaryFrontWheelsEncodersSpeedRads,
                 message,
                 primaryIds.topics.TLM.messages.FRONT_WHEELS_ENCODERS_SPEED_RADS.id
             );
+            return [value, undefined];
 
         case 'front_wheels_encoder.rotation_and_km':
-            return getMessage(
+            value = getMessage(
                 primary.serializePrimaryFrontWheelsEncodersRotationAndKm,
                 message,
                 primaryIds.topics.TLM.messages.FRONT_WHEELS_ENCODERS_ROTATION_AND_KM.id
             );
+            return [value, undefined];
     }
+    return [undefined, undefined];
 }
