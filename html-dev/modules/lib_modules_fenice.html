@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>lib/utils/parsers/can | @eagletrt/telemetria-postprocessing - DEV</title>
+	<title>lib/modules/fenice | @eagletrt/telemetria-postprocessing - DEV</title>
 	<meta name="description" content="Documentation for @eagletrt/telemetria-postprocessing - DEV">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules.html">@eagletrt/telemetria-postprocessing - DEV</a>
 				</li>
 				<li>
-					<a href="lib_utils_parsers_can.html">lib/utils/parsers/can</a>
+					<a href="lib_modules_fenice.html">lib/modules/fenice</a>
 				</li>
 			</ul>
-			<h1>Module lib/utils/parsers/can</h1>
+			<h1>Module lib/modules/fenice</h1>
 		</div>
 	</div>
 </header>
@@ -72,7 +72,7 @@
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="lib_utils_parsers_can.html#parsecanlog" class="tsd-kind-icon">parse<wbr>Can<wbr>Log</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="lib_modules_fenice.html#processlogstofenice" class="tsd-kind-icon">process<wbr>Logs<wbr>ToFenice</a></li>
 							</ul>
 						</section>
 					</div>
@@ -81,31 +81,31 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="parsecanlog" class="tsd-anchor"></a>
-					<h3>parse<wbr>Can<wbr>Log</h3>
+					<a name="processlogstofenice" class="tsd-anchor"></a>
+					<h3>process<wbr>Logs<wbr>ToFenice</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">parse<wbr>Can<wbr>Log<span class="tsd-signature-symbol">(</span>text<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, keepTimestamps<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span>, throwError<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/lib_utils_parsers.message.html" class="tsd-signature-type" data-tsd-kind="Interface">Message</a><span class="tsd-signature-symbol">[]</span></li>
+						<li class="tsd-signature tsd-kind-icon">process<wbr>Logs<wbr>ToFenice<span class="tsd-signature-symbol">(</span>canLogPath<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, outputPath<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, throwError<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/eagletrt/telemetria-postprocessing/blob/019aaac/source/lib/utils/parsers/can/index.ts#L78">source/lib/utils/parsers/can/index.ts:78</a></li>
+									<li>Defined in <a href="https://github.com/eagletrt/telemetria-postprocessing/blob/019aaac/source/lib/modules/fenice/index.ts#L6">source/lib/modules/fenice/index.ts:6</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>text: <span class="tsd-signature-type">string</span></h5>
+									<h5>canLogPath: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>keepTimestamps: <span class="tsd-signature-type">boolean</span></h5>
+									<h5>outputPath: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &#x27;result&#x27;</span></h5>
 								</li>
 								<li>
-									<h5>throwError: <span class="tsd-signature-type">boolean</span></h5>
+									<h5>throwError: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/lib_utils_parsers.message.html" class="tsd-signature-type" data-tsd-kind="Interface">Message</a><span class="tsd-signature-symbol">[]</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -118,14 +118,14 @@
 						<a href="../modules.html">Exports</a>
 					</li>
 					<li class="current tsd-kind-module">
-						<a href="lib_utils_parsers_can.html">lib/utils/parsers/can</a>
+						<a href="lib_modules_fenice.html">lib/modules/fenice</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="lib_utils_parsers_can.html#parsecanlog" class="tsd-kind-icon">parse<wbr>Can<wbr>Log</a>
+						<a href="lib_modules_fenice.html#processlogstofenice" class="tsd-kind-icon">process<wbr>Logs<wbr>ToFenice</a>
 					</li>
 				</ul>
 			</nav>
