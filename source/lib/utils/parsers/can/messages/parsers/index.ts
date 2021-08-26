@@ -7,7 +7,7 @@ export const PARSERS: Record<string, CanMessageParser> = {
     PARSE_INVERTERS_SPEED: msg => zweiComplement((msg[2] << 8) + msg[1]),
     PARSE_INVERTERS_TEMPERATURE_IGBT: msg => ((msg[2] << 8) + msg[1] - 15_797) / 112.1182,
     PARSE_INVERTERS_TEMPERATURE_MOTORS: msg => ((msg[2] << 8) + msg[1] - 9393.9) / 55.1,
-    PARSE_INVERTERS_TORQUE: msg => ((msg[2] << 8) + msg[1] - 9393.9) / 55.1,
+    PARSE_INVERTERS_TORQUE: msg => zweiComplement((msg[2] << 256) + msg[1]) / 55.1,
 
     /* BMS_HV */
     PARSE_BMS_HV_VOLTAGE: msg => ({
