@@ -20,7 +20,7 @@ function getMessage(lambda: any, message: Message, id: number): string {
     const micros = (timestamp % 1000) * 1000;
     const strTimestamp = `${seconds.toString()}.${micros.toString().padEnd(6, '0')}`;
 
-    const strId = id.toString(16);
+    const strId = id.toString(16).toUpperCase();
 
     return `(${strTimestamp}) can0  ${strId}#${strPayload}`;
 }
@@ -101,5 +101,11 @@ export function convertMessage(message: Message): string | undefined {
                 message,
                 secondaryIds.topics.TLM.messages.BMS_HV_CURRENT.id
             );
+
+        case 'imu.gyro':
+            return getMessage(primary.serializePrimaryImuGyro, message, primaryIds.topics.TLM.messages.IMU_GYRO.id);
+
+        case 'imu.accel':
+            return getMessage(primary.serializePrimaryImuAccel, message, primaryIds.topics.TLM.messages.IMU_ACCEL.id);
     }
 }

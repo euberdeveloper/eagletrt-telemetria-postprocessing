@@ -128,31 +128,31 @@ export function deserializePrimaryBmsLvValue(bytes) {
 
 export function serializePrimaryImuGyro(data: ReturnType<typeof deserializePrimaryImuGyro>) {
     return Uint8Array.from([
-        ...byteify.serializeInt16(data.x),
-        ...byteify.serializeInt16(data.y),
-        ...byteify.serializeInt16(data.z)
+        ...byteify.serializeFloat32(data.x),
+        ...byteify.serializeFloat32(data.y),
+        ...byteify.serializeFloat32(data.z)
     ]);
 }
 export function deserializePrimaryImuGyro(bytes) {
     return {
-        x: byteify.deserializeInt16(bytes.slice(0, 2)),
-        y: byteify.deserializeInt16(bytes.slice(2, 4)),
-        z: byteify.deserializeInt16(bytes.slice(4, 6))
+        x: byteify.deserializeFloat32(bytes.slice(0, 2)),
+        y: byteify.deserializeFloat32(bytes.slice(2, 4)),
+        z: byteify.deserializeFloat32(bytes.slice(4, 6))
     };
 }
 
 export function serializePrimaryImuAccel(data: ReturnType<typeof deserializePrimaryImuAccel>) {
     return Uint8Array.from([
-        ...byteify.serializeInt16(data.x),
-        ...byteify.serializeInt16(data.y),
-        ...byteify.serializeInt16(data.z)
+        ...byteify.serializeFloat32(data.x),
+        ...byteify.serializeFloat32(data.y),
+        ...byteify.serializeFloat32(data.z)
     ]);
 }
 export function deserializePrimaryImuAccel(bytes) {
     return {
-        x: byteify.deserializeInt16(bytes.slice(0, 2)),
-        y: byteify.deserializeInt16(bytes.slice(2, 4)),
-        z: byteify.deserializeInt16(bytes.slice(4, 6))
+        x: byteify.deserializeFloat32(bytes.slice(0, 2)),
+        y: byteify.deserializeFloat32(bytes.slice(2, 4)),
+        z: byteify.deserializeFloat32(bytes.slice(4, 6))
     };
 }
 
