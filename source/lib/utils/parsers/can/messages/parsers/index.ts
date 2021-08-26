@@ -4,10 +4,10 @@ export type CanMessageParser = (msg: number[]) => any;
 
 export const PARSERS: Record<string, CanMessageParser> = {
     /* INVERTERS */
-    PARSE_INVERTERS_SPEED: msg => zweiComplement((msg[2] << 8) + msg[1]),
+    PARSE_INVERTERS_SPEED: msg => (zweiComplement((msg[2] << 8) + msg[1]) / 32_767) * 7000,
     PARSE_INVERTERS_TEMPERATURE_IGBT: msg => ((msg[2] << 8) + msg[1] - 15_797) / 112.1182,
     PARSE_INVERTERS_TEMPERATURE_MOTORS: msg => ((msg[2] << 8) + msg[1] - 9393.9) / 55.1,
-    PARSE_INVERTERS_TORQUE: msg => zweiComplement((msg[2] << 256) + msg[1]) / 55.1,
+    PARSE_INVERTERS_TORQUE: msg => zweiComplement((msg[2] << 256) + msg[1]) / 32_767,
 
     /* BMS_HV */
     PARSE_BMS_HV_VOLTAGE: msg => ({
@@ -34,26 +34,6 @@ export const PARSERS: Record<string, CanMessageParser> = {
         temperature: msg[2] / 5,
         voltage: msg[0] / 10
     }),
-
-    /* IMU OLD */
-    PARSE_IMU_OLD_ACCEL: msg => {
-        const scale = msg[7];
-        return {
-            x: ((msg[1] << 8) + msg[2]) / 100 - scale,
-            y: ((msg[3] << 8) + msg[4]) / 100 - scale,
-            z: ((msg[5] << 8) + msg[6]) / 100 - scale,
-            scale: scale
-        };
-    },
-    PARSE_IMU_OLD_GYRO: msg => {
-        const scale = msg[7] * 10;
-        return {
-            x: ((msg[1] << 8) + msg[2]) / 10 - scale,
-            y: ((msg[3] << 8) + msg[4]) / 10 - scale,
-            z: ((msg[5] << 8) + msg[6]) / 10 - scale,
-            scale: scale
-        };
-    },
 
     /* IMU */
     PARSE_IMU: msg => ({
