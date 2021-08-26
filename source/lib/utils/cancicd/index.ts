@@ -11,7 +11,7 @@ function getMessage(lambda: any, message: Message, id: number): string {
     const strPayload = payload
         .toString('hex')
         .split(',')
-        .map(el => (+el).toString(16))
+        .map(el => (+el).toString(16).padStart(2, '0'))
         .join('')
         .toUpperCase();
 
