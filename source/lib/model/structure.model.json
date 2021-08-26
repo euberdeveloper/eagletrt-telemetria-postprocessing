@@ -114,20 +114,6 @@
             "parser": "PARSE_RMC"
         }
     },
-    "imu_old": {
-        "gyro": {
-            "type": "can",
-            "id": "0xC0",
-            "fb": "0x01",
-            "parser": "PARSE_IMU_OLD_GYRO"
-        },
-        "accel": {
-            "type": "can",
-            "id": "0xC0",
-            "fb": "0x00",
-            "parser": "PARSE_IMU_OLD_ACCEL"
-        }
-    },
     "imu": {
         "gyro": {
             "type": "can",

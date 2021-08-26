@@ -107,5 +107,40 @@ export function convertMessage(message: Message): string | undefined {
 
         case 'imu.accel':
             return getMessage(primary.serializePrimaryImuAccel, message, primaryIds.topics.TLM.messages.IMU_ACCEL.id);
+
+        case 'pedals.throttle':
+            return getMessage(
+                primary.serializePrimaryPedalsThrottle,
+                message,
+                primaryIds.topics.TLM.messages.PEDALS_THROTTLE.id
+            );
+
+        case 'pedals.brake':
+            return getMessage(
+                primary.serializePrimaryPedalsBrake,
+                message,
+                primaryIds.topics.TLM.messages.PEDALS_BRAKE.id
+            );
+
+        case 'steering_wheel.encoder':
+            return getMessage(
+                primary.serializePrimarySteeringWheelEncoder,
+                message,
+                primaryIds.topics.TLM.messages.STEERING_WHEEL_ENCODER.id
+            );
+
+        case 'front_wheels_encoder.speed_rads':
+            return getMessage(
+                primary.serializePrimaryFrontWheelsEncodersSpeedRads,
+                message,
+                primaryIds.topics.TLM.messages.FRONT_WHEELS_ENCODERS_SPEED_RADS.id
+            );
+
+        case 'front_wheels_encoder.rotation_and_km':
+            return getMessage(
+                primary.serializePrimaryFrontWheelsEncodersRotationAndKm,
+                message,
+                primaryIds.topics.TLM.messages.FRONT_WHEELS_ENCODERS_ROTATION_AND_KM.id
+            );
     }
 }

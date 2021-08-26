@@ -35,42 +35,22 @@ export const PARSERS: Record<string, CanMessageParser> = {
         voltage: msg[0] / 10
     }),
 
-    /* IMU OLD */
-    PARSE_IMU_OLD_ACCEL: msg => {
-        const scale = msg[7];
-        return {
-            x: ((msg[1] << 8) + msg[2]) / 100 - scale,
-            y: ((msg[3] << 8) + msg[4]) / 100 - scale,
-            z: ((msg[5] << 8) + msg[6]) / 100 - scale,
-            scale: scale
-        };
-    },
-    PARSE_IMU_OLD_GYRO: msg => {
-        const scale = msg[7] * 10;
-        return {
-            x: ((msg[1] << 8) + msg[2]) / 10 - scale,
-            y: ((msg[3] << 8) + msg[4]) / 10 - scale,
-            z: ((msg[5] << 8) + msg[6]) / 10 - scale,
-            scale: scale
-        };
-    },
-
     /* IMU */
     PARSE_IMU: msg => ({
-        x: zweiComplement((msg[0] << 8) + msg[1]) / 100,
-        y: zweiComplement((msg[2] << 8) + msg[3]) / 100,
-        z: zweiComplement((msg[4] << 8) + msg[5]) / 100
+        x: (msg[0] << 8) + msg[1],
+        y: (msg[2] << 8) + msg[3],
+        z: (msg[4] << 8) + msg[5]
     }),
 
     /* STEERING WHEEL ENCODER */
-    PARSE_STEERING_WHEEL_ENCODER: msg => ((msg[1] << 8) + msg[2]) / 100,
+    PARSE_STEERING_WHEEL_ENCODER: msg => (msg[1] << 8) + msg[2],
 
     /* PEDALS */
     PARSE_PEDALS_THROTTLE: msg => msg[1],
     PARSE_PEDALS_BRAKE: msg => ({
         is_breaking: msg[1],
-        pressure_front: ((msg[2] << 8) + msg[4]) / 500,
-        pressure_back: ((msg[5] << 8) + msg[7]) / 500
+        pressure_front: (msg[2] << 8) + msg[4],
+        pressure_back: (msg[5] << 8) + msg[7]
     }),
 
     /* FRONT_WHEELS_ENCODERS */

@@ -128,31 +128,31 @@ export function deserializePrimaryBmsLvValue(bytes) {
 
 export function serializePrimaryImuGyro(data: ReturnType<typeof deserializePrimaryImuGyro>) {
     return Uint8Array.from([
-        ...byteify.serializeFloat32(data.x),
-        ...byteify.serializeFloat32(data.y),
-        ...byteify.serializeFloat32(data.z)
+        ...byteify.serializeUint16(data.x),
+        ...byteify.serializeUint16(data.y),
+        ...byteify.serializeUint16(data.z)
     ]);
 }
 export function deserializePrimaryImuGyro(bytes) {
     return {
-        x: byteify.deserializeFloat32(bytes.slice(0, 2)),
-        y: byteify.deserializeFloat32(bytes.slice(2, 4)),
-        z: byteify.deserializeFloat32(bytes.slice(4, 6))
+        x: byteify.deserializeUint16(bytes.slice(0, 2)),
+        y: byteify.deserializeUint16(bytes.slice(2, 4)),
+        z: byteify.deserializeUint16(bytes.slice(4, 6))
     };
 }
 
 export function serializePrimaryImuAccel(data: ReturnType<typeof deserializePrimaryImuAccel>) {
     return Uint8Array.from([
-        ...byteify.serializeFloat32(data.x),
-        ...byteify.serializeFloat32(data.y),
-        ...byteify.serializeFloat32(data.z)
+        ...byteify.serializeUint16(data.x),
+        ...byteify.serializeUint16(data.y),
+        ...byteify.serializeUint16(data.z)
     ]);
 }
 export function deserializePrimaryImuAccel(bytes) {
     return {
-        x: byteify.deserializeFloat32(bytes.slice(0, 2)),
-        y: byteify.deserializeFloat32(bytes.slice(2, 4)),
-        z: byteify.deserializeFloat32(bytes.slice(4, 6))
+        x: byteify.deserializeUint16(bytes.slice(0, 2)),
+        y: byteify.deserializeUint16(bytes.slice(2, 4)),
+        z: byteify.deserializeUint16(bytes.slice(4, 6))
     };
 }
 
@@ -191,15 +191,15 @@ export function deserializePrimaryPedalsThrottle(bytes) {
 
 export function serializePrimaryPedalsBrake(data: ReturnType<typeof deserializePrimaryPedalsBrake>) {
     return Uint8Array.from([
-        ...byteify.serializeBool(data.is_breaking),
-        ...byteify.serializeUint8(data.__unused_padding_1),
+        ...byteify.serializeUint8(data.is_breaking ? 1 : 0),
+        1,
         ...byteify.serializeUint16(data.pressure_front),
         ...byteify.serializeUint16(data.pressure_back)
     ]);
 }
 export function deserializePrimaryPedalsBrake(bytes) {
     return {
-        is_breaking: byteify.deserializeBool(bytes.slice(0, 1)),
+        is_breaking: byteify.deserializeUint8(bytes.slice(0, 1)),
         // eslint-disable-next-line @typescript-eslint/naming-convention
         __unused_padding_1: byteify.deserializeUint8(bytes.slice(1, 2)),
         pressure_front: byteify.deserializeUint16(bytes.slice(2, 4)),
