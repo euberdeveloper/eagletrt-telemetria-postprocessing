@@ -2,6 +2,11 @@ import { zweiComplement } from './zweiComplement';
 
 export type CanMessageParser = (msg: number[]) => any;
 
+function round(value, precision) {
+    var multiplier = Math.pow(10, precision || 0);
+    return Math.round(value * multiplier) / multiplier;
+}
+
 export const PARSERS: Record<string, CanMessageParser> = {
     /* INVERTERS */
     PARSE_INVERTERS_SPEED: msg => zweiComplement((msg[2] << 8) + msg[1]),
@@ -11,18 +16,18 @@ export const PARSERS: Record<string, CanMessageParser> = {
 
     /* BMS_HV */
     PARSE_BMS_HV_VOLTAGE: msg => ({
-        total: ((msg[1] << 16) + (msg[2] << 8) + msg[3]) / 10_000,
-        max: ((msg[4] << 8) + msg[5]) / 10_000,
-        min: ((msg[6] << 8) + msg[7]) / 10_000
+        total: round((msg[1] << 16) + (msg[2] << 8) + msg[3] / 10_000, 1),
+        max: round((msg[4] << 8) + msg[5] / 10_000, 1),
+        min: round((msg[6] << 8) + msg[7] / 10_000, 1)
     }),
     PARSE_BMS_HV_TEMPERATURE: msg => ({
-        average: ((msg[1] << 8) + msg[2]) / 100,
-        max: ((msg[3] << 8) + msg[4]) / 100,
-        min: ((msg[5] << 8) + msg[6]) / 100
+        average: round((msg[1] << 8) + msg[2] / 100, 1),
+        max: round((msg[3] << 8) + msg[4] / 100, 1),
+        min: round((msg[5] << 8) + msg[6] / 100, 1)
     }),
     PARSE_BMS_HV_CURRENT: msg => ({
-        current: ((msg[1] << 8) + msg[2]) / 10,
-        pow: (msg[3] << 8) + msg[4]
+        current: round((msg[1] << 8) + msg[2] / 10, 1),
+        pow: round(msg[3] << (8 + msg[4]), 1)
     }),
     PARSE_BMS_HV_ERROR_WARNINGS: msg => ({
         fault_id: msg[1],

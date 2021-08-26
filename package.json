@@ -73,6 +73,7 @@
     "webpack-node-externals": "^2.5.2"
   },
   "dependencies": {
+    "byteify": "^2.0.10",
     "euberlog": "^2.0.17",
     "yargs": "^16.2.0"
   },

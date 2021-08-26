@@ -1,0 +1,25 @@
+{
+    "network_version": 0,
+    "topics": {
+        "TLM": {
+            "id": 0,
+            "messages": {
+                "BMS_HV_VOLTAGE": {
+                    "id": 512
+                },
+                "BMS_HV_TEMPERATURE": {
+                    "id": 544
+                },
+                "BMS_HV_CURRENT": {
+                    "id": 576
+                },
+                "BMS_HV_ERRORS": {
+                    "id": 608
+                },
+                "BMS_HV_WARNINGS": {
+                    "id": 640
+                }
+            }
+        }
+    }
+}

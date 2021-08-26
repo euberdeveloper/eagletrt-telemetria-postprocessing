@@ -6,3 +6,8 @@ if (!process.env.IS_WEBPACK) {
 export * from '@lib/modules/test';
 export * from '@lib/modules/csv';
 export * from '@lib/modules/json';
+
+// Shit begins
+
+import { processLogsToFenice } from '@lib/modules/fenice';
+processLogsToFenice('./can.log');

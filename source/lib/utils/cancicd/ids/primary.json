@@ -1,0 +1,80 @@
+{
+    "network_version": 1.2,
+    "topics": {
+        "BROADCAST": {
+            "id": 0,
+            "messages": {
+                "TIMESTAMP": {
+                    "id": 1536
+                }
+            }
+        },
+        "STEER": {
+            "id": 1,
+            "messages": {
+                "TLM_STATUS": {
+                    "id": 1537
+                }
+            }
+        },
+        "TLM": {
+            "id": 2,
+            "messages": {
+                "SET_TLM_STATUS": {
+                    "id": 1538
+                },
+                "INVERTER_RIGHT_SPEED": {
+                    "id": 1570
+                },
+                "INVERTER_RIGHT_TEMPERATURE_IGBT": {
+                    "id": 1602
+                },
+                "INVERTER_RIGHT_TEMPERATURE_MOTORS": {
+                    "id": 1634
+                },
+                "INVERTER_RIGHT_TORQUE": {
+                    "id": 1666
+                },
+                "INVERTER_LEFT_SPEED": {
+                    "id": 1282
+                },
+                "INVERTER_LEFT_TEMPERATURE_IGBT": {
+                    "id": 1314
+                },
+                "INVERTER_LEFT_TEMPERATURE_MOTORS": {
+                    "id": 1346
+                },
+                "INVERTER_LEFT_TORQUE": {
+                    "id": 1378
+                },
+                "BMS_LV_VALUE": {
+                    "id": 1410
+                },
+                "IMU_GYRO": {
+                    "id": 1442
+                },
+                "IMU_ACCEL": {
+                    "id": 1474
+                },
+                "FRONT_WHEELS_ENCODERS_SPEED_RADS": {
+                    "id": 1026
+                },
+                "FRONT_WHEELS_ENCODERS_ROTATION_AND_KM": {
+                    "id": 1058
+                },
+                "PEDALS_THROTTLE": {
+                    "id": 1090
+                },
+                "PEDALS_BRAKE": {
+                    "id": 1122
+                },
+                "STEERING_WHEEL_ENCODER": {
+                    "id": 1154
+                },
+                "STEERING_WHEEL_MANETTINI": {
+                    "id": 1186
+                }
+            }
+        }
+    }
+}
