@@ -4,7 +4,7 @@ export type CanMessageParser = (msg: number[]) => any;
 
 export const PARSERS: Record<string, CanMessageParser> = {
     /* INVERTERS */
-    PARSE_INVERTERS_SPEED: msg => zweiComplement((msg[2] << 8) + msg[1]),
+    PARSE_INVERTERS_SPEED: msg => (msg[2] << 8) + msg[1],
     PARSE_INVERTERS_TEMPERATURE_IGBT: msg => (msg[2] << 8) + msg[1],
     PARSE_INVERTERS_TEMPERATURE_MOTORS: msg => (msg[2] << 8) + msg[1],
     PARSE_INVERTERS_TORQUE: msg => (msg[2] << 8) + msg[1],

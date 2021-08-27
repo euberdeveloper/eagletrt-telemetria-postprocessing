@@ -157,7 +157,6 @@ export function convertMessage(message: Message): [string | undefined, string | 
             return [value, undefined];
 
         case 'front_wheels_encoder.rotation_and_km':
-            console.log('shit');
             value = getMessage(
                 primary.serializePrimaryFrontWheelsEncodersRotationAndKm,
                 message,

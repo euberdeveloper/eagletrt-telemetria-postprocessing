@@ -37,11 +37,11 @@ export function deserializePrimarySetTlmStatus(bytes) {
 }
 
 export function serializePrimaryInverterRightSpeed(data: ReturnType<typeof deserializePrimaryInverterRightSpeed>) {
-    return Uint8Array.from([...byteify.serializeFloat32(data.value).reverse()]);
+    return Uint8Array.from([...byteify.serializeUint16(data.value).reverse()]);
 }
 export function deserializePrimaryInverterRightSpeed(bytes) {
     return {
-        value: byteify.deserializeInt16(bytes.slice(0, 2).reverse())
+        value: byteify.deserializeUint16(bytes.slice(0, 2).reverse())
     };
 }
 
