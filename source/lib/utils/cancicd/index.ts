@@ -147,8 +147,7 @@ export function convertMessage(message: Message): [string | undefined, string | 
             );
             return [value, undefined];
 
-        case 'front_wheels_encoder.speed_rads':
-            console.log('merda');
+        case 'front_wheels_encoders.speed_rads':
             value = getMessage(
                 primary.serializePrimaryFrontWheelsEncodersSpeedRads,
                 message,
@@ -156,7 +155,7 @@ export function convertMessage(message: Message): [string | undefined, string | 
             );
             return [value, undefined];
 
-        case 'front_wheels_encoder.rotation_and_km':
+        case 'front_wheels_encoders.rotation_and_km':
             value = getMessage(
                 primary.serializePrimaryFrontWheelsEncodersRotationAndKm,
                 message,
