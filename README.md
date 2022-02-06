@@ -3,7 +3,6 @@
 [![Lint](https://github.com/eagletrt/telemetria-postprocessing/actions/workflows/lint.yml/badge.svg)](https://github.com/eagletrt/telemetria-postprocessing/actions/workflows/lint.yml)
 [![Build](https://github.com/eagletrt/telemetria-postprocessing/actions/workflows/build.yml/badge.svg)](https://github.com/eagletrt/telemetria-postprocessing/actions/workflows/build.yml)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-[![dependencies Status](https://david-dm.org/eagletrt/telemetria-postprocessing/status.svg)](https://david-dm.org/eagletrt/telemetria-postprocessing)
 [![License](https://img.shields.io/npm/l/@eagletrt/telemetria-postprocessing.svg)](https://github.com/eagletrt/telemetria-postprocessing/blob/master/LICENSE)
 [![Types](https://img.shields.io/npm/types/@eagletrt/telemetria-postprocessing.svg)](https://www.npmjs.com/package/@eagletrt/telemetria-postprocessing)
 
